@@ -9,9 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>liquibase</module>
+        <module>spring</module>
     </modules>
 
     <packaging>pom</packaging>
-
-
 </project>
