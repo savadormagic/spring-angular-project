@@ -1,0 +1,2 @@
+Варианты сборки мавена
+<packaging>pom | jar | war | ear </packaging>
