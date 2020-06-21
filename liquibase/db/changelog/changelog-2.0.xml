@@ -1,0 +1,27 @@
+<changeSet id="20200620-05" author="polovnikov">
+    <preConditions onFail="MARK_RAN">
+        <not>
+            <tableExists tableName="ROOM" schemaName="public"/>
+        </not>
+    </preConditions>
+    <comment>Lesson 1. Liquibase. Создание таблицы ROOM</comment>
+    <sql>
+        create table STUDENT (
+            id serial primary key,
+            idd int not null,
+            first_name varchar(50),
+            middle_name varchar(50),
+            last_name varchar(50),
+            passport varchar(15),
+            birth_date timestamp,
+            create_date timestamp,
+            delete_date timestamp,
+            status varchar(10)
+        );
+    </sql>
+    <rollback>
+        <sql>
+            drop table STUDENT;
+        </sql>
+    </rollback>
+</changeSet>

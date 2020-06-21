@@ -24,9 +24,9 @@
         <profile>
             <id>polovnikov</id>
             <properties>
-                <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
-                <username>admin</username>
-                <password>admin</password>
+                <url>jdbc:postgresql://127.0.0.1:5432/springproject</url>
+                <username>user1</username>
+                <password>User111</password>
             </properties>
         </profile>
     </profiles>
