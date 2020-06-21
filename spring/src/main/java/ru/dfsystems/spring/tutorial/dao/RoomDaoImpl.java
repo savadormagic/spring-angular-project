@@ -1,5 +1,5 @@
 package ru.dfsystems.spring.tutorial.dao;
-
+/*
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
@@ -20,3 +20,4 @@ public class RoomDaoImpl extends RoomDao {
                 .fetchOneInto(Room.class);
     }
 }
+*/
