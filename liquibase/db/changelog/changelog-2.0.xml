@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200623-00" author="noskov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-01" author="noskov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENT" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 1. Liquibase. Создание таблицы STUDENT</comment>
+        <sql>
+            create table STUDENT(
+            id serial primary key,
+            idd int not null,
+            first_name varchar(50),
+            middle_name varchar(50),
+            last_name varchar(50),
+            passport varchar(15),
+            birth_date timestamp,
+            create_date timestamp,
+            delete_date timestamp,
+            status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table STUDENT;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-02" author="noskov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-03" author="noskov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 1. Liquibase. Создание таблицы Teacher</comment>
+        <sql>
+            create table TEACHER(
+            id serial primary key,
+            idd int not null,
+            first_name varchar(50),
+            middle_name varchar(50),
+            last_name varchar(50),
+            passport varchar(15),
+            birth_date timestamp,
+            create_date timestamp,
+            delete_date timestamp,
+            status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table TEACHER;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-04" author="noskov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-05" author="noskov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="USER" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 1. Liquibase. Создание таблицы User</comment>
+        <sql>
+            create table USER(
+            id serial primary key,
+            idd int not null,
+            first_name varchar(50),
+            middle_name varchar(50),
+            last_name varchar(50),
+            passport varchar(15),
+            birth_date timestamp,
+            create_date timestamp,
+            delete_date timestamp,
+            status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table USER;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-06" author="noskov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-07" author="noskov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 1. Liquibase. Создание таблицы Course</comment>
+        <sql>
+            create table COURSE(
+            id serial,
+            idd int,
+            name varchar(100),
+            description varchar(500),
+            teacher_idd int,
+            max_count_student int,
+            start_date timestamp,
+            end_date timestamp,
+            create_date timestamp,
+            delete_date timestamp,
+            status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table COURSE;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-08" author="noskov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-09" author="noskov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 1. Liquibase. Создание таблицы Lesson</comment>
+        <sql>
+            create table LESSON(
+            id serial,
+            name varchar(100),
+            description varchar(1000),
+            course_idd int,
+            room_idd int,
+            lesson_date_start timestamp,
+            lesson_date_end timestamp,
+            extra_instruments varchar(1000)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table LESSON;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-10" author="noskov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-11" author="noskov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 1. Liquibase. Создание таблицы STUDENT_TO_COURSE</comment>
+        <sql>
+            create table STUDENT_TO_COURSE(
+            id serial primary key,
+            student_idd int,
+            course_idd int
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table STUDENT_TO_COURSE;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-11" author="noskov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-12" author="noskov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 1. Liquibase. Создание таблицы STUDENT_TO_COURSE</comment>
+        <sql>
+            create table STUDENT_TO_COURSE(
+            id serial primary key,
+            student_idd int,
+            course_idd int
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table STUDENT_TO_COURSE;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-13" author="noskov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-14" author="noskov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON_TO_INSTRUMENTS" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 1. Liquibase. Создание таблицы LESSON_TO_INSTRUMENTS</comment>
+        <sql>
+            create table LESSON_TO_INSTRUMENTS(
+            id serial primary key,
+            lesson_idd int,
+            instrument_idd int
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table LESSON_TO_INSTRUMENTS;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
