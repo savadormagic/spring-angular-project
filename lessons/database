@@ -10,8 +10,26 @@ Student(
     delete_date timestamp,
     status varchar(10)
 )
-Teacher()
-User()
+Teacher(
+	id serial,
+    idd int,
+    first_name varchar(50),
+    middle_name varchar(50),
+    last_name varchar(50),
+    passport varchar(15),
+    birth_date timestamp,
+    create_date timestamp,
+    delete_date timestamp,
+    status varchar(10)
+)
+
+User(
+	id serial,
+    login varchar(30),
+	password varchar(30)
+	email varchar(30)
+)
+
 Course(
     id serial,
     idd int,
@@ -50,16 +68,4 @@ Lesson(
     lesson_date_start timestamp,
     lesson_date_end timestamp,
     extra_instruments varchar(1000) //PRINTER,SENSOR_BOARD,...
-)
-
-Lesson_to_Instruments()
-Room_to_Instruments()
-
-Instruments(
-    id serial
-    idd int,
-    name varchar(50),
-    number varchar(),
-    create_date timestamp,
-    delete_date timestamp
 )
