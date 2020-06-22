@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd">
+
+    <changeSet id="20200622-01" author="cherepanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="INSTRUMENTS" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="INSTRUMENTS">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="timestamp"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="INSTRUMENTS"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="20200622-02" author="cherepanov">
+        <preConditions>
+            <and>
+                <tableExists tableName="INSTRUMENTS" schemaName="public"/>
+                <not>
+                    <columnExists tableName="INSTRUMENTS" columnName="idd"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавили столбец IDD</comment>
+        <addColumn tableName="INSTRUMENTS">
+            <column name="idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="INSTRUMENTS" columnName="idd"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-03" author="cherepanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSONS" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="LESSONS">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(1000)"/>
+            <column name="course_idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lesson_date_start" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lesson_date_end" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="instruments" type="varchar(1000)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="LESSONS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-04" author="cherepanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ROOMS" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Add table rooms</comment>
+        <createTable tableName="ROOMS">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="varchar(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="block" type="varchar(5)"/>
+            <column name="capacity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="timestamp"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ROOMS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-05" author="cherepanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENTS_TO_COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Add table Student_to_course</comment>
+        <createTable tableName="STUDENTS_TO_COURSE">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="student_idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course_idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="success" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="STUDENTS_TO_COURSE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-06" author="cherepanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENTS" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Add table Students</comment>
+        <createTable tableName="STUDENTS">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passport" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="timestamp"/>
+            <column name="status" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="STUDENTS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-07" author="cherepanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="COURSES" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Add table courses</comment>
+        <sql>
+            create table COURSES (
+            id serial primary key,
+            idd int not null,
+            name varchar(100) not null,
+            description varchar(500),
+            teacher_idd int not null,
+            max_count_student int,
+            start_date timestamp not null,
+            end_date timestamp not null,
+            created_at timestamp not null,
+            deleted_at timestamp,
+            status varchar(10) not null
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table COURSES;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
