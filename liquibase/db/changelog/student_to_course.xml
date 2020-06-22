@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="20200621-01" author="samoylov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="student_to_course" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы student_to_course</comment>
+        <createTable tableName="student_to_course">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="student_idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course_idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="success" type="boolean"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="student_to_course" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,117 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "20200621-01",
+        "author": "samoylov",
+        "preConditions": [
+          {
+            "onFail": "MARK_RAN",
+            "not": {
+              "tableExists": {
+                "tableName": "teacher",
+                "schemaName": "public"
+              }
+            }
+          }
+        ],
+        "comment": "Создание таблицы teacher",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "teacher",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "serial",
+                    "autoIncrement": "true",
+                    "constraints": {
+                      "primaryKey": true,
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "idd",
+                    "type": "int",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "first_name",
+                    "type": "varchar(50)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "last_name",
+                    "type": "varchar(50)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "middle_name",
+                    "type": "varchar(50)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "passport",
+                    "type": "varchar(15)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "birth_date",
+                    "type": "timestamp(0)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "create_date",
+                    "type": "timestamp(0)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "delete_date",
+                    "type": "timestamp(0)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "status",
+                    "type": "varchar(10)"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "rollback": {
+          "dropTable": {
+            "tableName": "teacher",
+            "schemaName": "public"
+          }
+        }
+      }
+    }
+  ]
+}

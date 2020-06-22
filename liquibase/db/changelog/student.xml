@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="20200621-01" author="samoylov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="student" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы Student</comment>
+        <createTable tableName="student">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="varchar(50)"/>
+            <column name="passport" type="varchar(15)"/>
+            <column name="birth_date" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_date" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delete_date" type="timestamp(0)"/>
+            <column name="status" type="varchar(10)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="student" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

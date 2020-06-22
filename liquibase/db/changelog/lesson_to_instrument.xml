@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="20200621-01" author="samoylov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="lesson_to_instrument" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы lesson_to_instrument</comment>
+        <createTable tableName="lesson_to_instrument">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="lesson" type="int">
+                <constraints nullable="false"/>
+                <!--                раз idd не уникальны, без внешних ключей-->
+                <!--                <constraints nullable="false" foreignKeyName="fk_to_lesson" references="lesson(id)"/>-->]
+            </column>
+            <column name="instrument_idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="lesson_to_instrument" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

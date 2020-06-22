@@ -3,8 +3,14 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
-    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <include file="changelog/changelog-1.0.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/student.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/teacher.json" relativeToChangelogFile="true"/>
+    <include file="changelog/user.yaml" relativeToChangelogFile="true"/>
+    <include file="changelog/course.sql" relativeToChangelogFile="true"/>
+    <include file="changelog/lesson.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/lesson_to_instrument.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/student_to_course.xml" relativeToChangelogFile="true"/>
+<!--    <includeAll path="changelog/script/" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>
