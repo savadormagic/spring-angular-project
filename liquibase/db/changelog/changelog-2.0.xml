@@ -78,12 +78,12 @@
     <changeSet id="20200623-05" author="noskov">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="USER" schemaName="public"/>
+                <tableExists tableName="USERS" schemaName="public"/>
             </not>
         </preConditions>
-        <comment>Lesson 1. Liquibase. Создание таблицы User</comment>
+        <comment>Lesson 1. Liquibase. Создание таблицы Users</comment>
         <sql>
-            create table USER(
+            create table USERS(
             id serial primary key,
             idd int not null,
             first_name varchar(50),
@@ -98,7 +98,7 @@
         </sql>
         <rollback>
             <sql>
-                drop table USER;
+                drop table USERS;
             </sql>
         </rollback>
     </changeSet>
@@ -191,11 +191,11 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200623-11" author="noskov">
+    <changeSet id="20200623-12" author="noskov">
         <tagDatabase tag="changelog-2.0"/>
     </changeSet>
 
-    <changeSet id="20200623-12" author="noskov">
+    <changeSet id="20200623-13" author="noskov">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
@@ -216,11 +216,11 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200623-13" author="noskov">
+    <changeSet id="20200623-14" author="noskov">
         <tagDatabase tag="changelog-2.0"/>
     </changeSet>
 
-    <changeSet id="20200623-14" author="noskov">
+    <changeSet id="20200623-15" author="noskov">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="LESSON_TO_INSTRUMENTS" schemaName="public"/>
