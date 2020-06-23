@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="20200620-11" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы TEACHER</comment>
+        <createTable tableName="TEACHER">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="TEACHER" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200620-12" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="IDD"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки IDD к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="IDD"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="20200620-13" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="FIRST_NAME"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки FIRST_NAME к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="FIRST_NAME" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="FIRST_NAME"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200620-14" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="MIDDLE_NAME"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки MIDDLE_NAME к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="MIDDLE_NAME" type="varchar(50)"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="MIDDLE_NAME"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200620-15" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="LAST_NAME"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки LAST_NAME к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="LAST_NAME" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="LAST_NAME"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200620-16" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="PASSPORT"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки PASSPORT к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="PASSPORT" type="varchar(15)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="PASSPORT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200620-17" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="BIRTH_DATE"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки BIRTH_DATE к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="BIRTH_DATE" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="BIRTH_DATE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200620-18" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="CREATE_DATE"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки CREATE_DATE к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="CREATE_DATE" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="CREATE_DATE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200620-19" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="DELETE_DATE"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки DELETE_DATE к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="DELETE_DATE" type="timestamp(0)"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="DELETE_DATE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200620-20" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+                <not>
+                    <columnExists tableName="TEACHER" columnName="STATUS"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки STATUS к TEACHER</comment>
+        <addColumn tableName="TEACHER">
+            <column name="STATUS" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="TEACHER" columnName="STATUS"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

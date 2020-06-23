@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="20200623-24" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы LESSON_TO_INSTRUMENT</comment>
+        <createTable tableName="LESSON_TO_INSTRUMENT">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+
+    <changeSet id="20200623-25" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+                <not>
+                    <columnExists tableName="LESSON_TO_INSTRUMENT" columnName="LESSON_IDD"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки LESSON_IDD к LESSON_TO_INSTRUMENT</comment>
+        <addColumn tableName="LESSON_TO_INSTRUMENT">
+            <column name="LESSON_IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="LESSON_TO_INSTRUMENT" columnName="LESSON_IDD"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-26" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+                <not>
+                    <columnExists tableName="LESSON_TO_INSTRUMENT" columnName="INSTRUMENT_IDD"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки INSTRUMENT_IDD к LESSON_TO_INSTRUMENT</comment>
+        <addColumn tableName="LESSON_TO_INSTRUMENT">
+            <column name="INSTRUMENT_IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="LESSON_TO_INSTRUMENT" columnName="INSTRUMENT_IDD"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

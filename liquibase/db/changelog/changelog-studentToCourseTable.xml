@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="20200623-20" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы STUDENT_TO_COURSE</comment>
+        <createTable tableName="STUDENT_TO_COURSE">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="STUDENT_TO_COURSE" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+
+    <changeSet id="20200623-21" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+                <not>
+                    <columnExists tableName="STUDENT_TO_COURSE" columnName="STUDENT_IDD"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки STUDENT_IDD к STUDENT_TO_COURSE</comment>
+        <addColumn tableName="STUDENT_TO_COURSE">
+            <column name="STUDENT_IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="STUDENT_TO_COURSE" columnName="STUDENT_IDD"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-22" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+                <not>
+                    <columnExists tableName="STUDENT_TO_COURSE" columnName="COURSE_IDD"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки COURSE_IDD к STUDENT_TO_COURSE</comment>
+        <addColumn tableName="STUDENT_TO_COURSE">
+            <column name="COURSE_IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="STUDENT_TO_COURSE" columnName="COURSE_IDD"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="20200623-23" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+                <not>
+                    <columnExists tableName="STUDENT_TO_COURSE" columnName="SUCCESS"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки SUCCESS к STUDENT_TO_COURSE</comment>
+        <addColumn tableName="STUDENT_TO_COURSE">
+            <column name="SUCCESS" type="int"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="STUDENT_TO_COURSE" columnName="SUCCESS"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
