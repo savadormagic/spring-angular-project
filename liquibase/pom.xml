@@ -22,11 +22,11 @@
 
     <profiles>
         <profile>
-            <id>polovnikov</id>
+            <id>kusakin</id>
             <properties>
                 <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
-                <username>admin</username>
-                <password>admin</password>
+                <username>postgres</username>
+                <password>123</password>
             </properties>
         </profile>
     </profiles>
@@ -42,7 +42,9 @@
                     <changeLogFile>${basedir}/db/master.xml</changeLogFile>
 <!--                    <outputChangeLogFile>${basedir}/db/output.xml</outputChangeLogFile>-->
                     <url>${url}</url>
+                    <!--suppress UnresolvedMavenProperty -->
                     <username>${username}</username>
+                    <!--suppress UnresolvedMavenProperty -->
                     <password>${password}</password>
 <!--                    <rollbackCount>2</rollbackCount>-->
 <!--                    <rollbackDate>2020-06-20</rollbackDate>-->

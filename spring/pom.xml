@@ -99,8 +99,8 @@
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
-                        <username>admin</username>
-                        <password>admin</password>
+                        <username>postgres</username>
+                        <password>123</password>
                     </jdbc>
 
                     <generator>

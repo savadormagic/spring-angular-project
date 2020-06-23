@@ -6,11 +6,11 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
     http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
-    <changeSet id="20200620-00" author="polovnikov">
+    <changeSet id="20200620-00" author="kusakin">
         <tagDatabase tag="changelog-1.0"/>
     </changeSet>
 
-    <changeSet id="20200622-01" author="polovnikov">
+    <changeSet id="20200622-01" author="kusakin">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="INSTRUMENT" schemaName="public"/>
@@ -27,11 +27,11 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200620-02-0" author="polovnikov">
+    <changeSet id="20200620-02-0" author="kusakin">
         <tagDatabase tag="changelog-2.0"/>
     </changeSet>
 
-    <changeSet id="20200622-02" author="polovnikov">
+    <changeSet id="20200622-02" author="kusakin">
         <preConditions onFail="MARK_RAN">
             <and>
                 <tableExists tableName="INSTRUMENT" schemaName="public"/>
@@ -51,7 +51,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200620-03" author="polovnkov">
+    <changeSet id="20200620-03" author="kusakin">
         <preConditions onFail="MARK_RAN">
             <and>
                 <tableExists tableName="INSTRUMENT" schemaName="public"/>
@@ -86,7 +86,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200620-04" author="polovnikov">
+    <changeSet id="20200620-04" author="kusakin">
         <preConditions onFail="MARK_RAN">
             <and>
                 <tableExists tableName="INSTRUMENT" schemaName="public"/>
@@ -101,7 +101,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200620-05" author="polovnikov">
+    <changeSet id="20200620-05" author="kusakin">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="ROOM" schemaName="public"/>
@@ -110,8 +110,8 @@
         <comment>Lesson 1. Liquibase. Создание таблицы ROOM</comment>
         <sql>
             create table ROOM (
-                id serial primary key,
-                idd int not null,
+            id serial primary key,
+            idd int not null,
                 number varchar(5),
                 block varchar(5),
                 create_date timestamp(0) not null,
@@ -125,7 +125,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200620-06" author="polovikov">
+    <changeSet id="20200620-06" author="kusakin">
         <preConditions>
             <not>
                 <tableExists tableName="INSTRUMENT_TO_ROOM" schemaName="public"/>
