@@ -121,7 +121,14 @@
                             <includes>
                                 ROOM |
                                 INSTRUMENT |
-                                INSTRUMENT_TO_ROOM
+                                INSTRUMENT_TO_ROOM |
+                                STUDENT |
+                                TEACHER |
+                                USERS |
+                                COURSE |
+                                STUDENT_TO_COURSE |
+                                LESSON |
+                                LESSON_TO_INSTRUMENT
                             </includes>
 
                             <schemata>

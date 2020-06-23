@@ -11,6 +11,7 @@ import static ru.dfsystems.spring.tutorial.generated.tables.Room.ROOM;
 @Repository
 @AllArgsConstructor
 public class RoomDaoImpl extends RoomDao {
+
     private final DSLContext jooq;
 
     public Room getActiveByIdd(Integer idd) {

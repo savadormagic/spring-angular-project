@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200622-00" author="ovcharov">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200622-01" author="ovcharov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENT" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы STUDENT</comment>
+        <createTable tableName="STUDENT">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="IDD" type="int"/>
+            <column name="FIRST_NAME" type="varchar(50)"/>
+            <column name="MIDDLE_NAME" type="varchar(50)"/>
+            <column name="LAST_NAME" type="varchar(50)"/>
+            <column name="PASSPORT" type="varchar(15)"/>
+            <column name="BIRTH_DATE" type="timestamp(0)"/>
+            <column name="CREATE_DATE" type="timestamp(0)"/>
+            <column name="DELETE_DATE" type="timestamp(0)"/>
+            <column name="STATUS" type="varchar(10)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="STUDENT" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-02" author="ovcharov">
+        <comment>Создание уникального индекса idx_student_idd</comment>
+        <createIndex indexName="idx_student_idd" tableName="STUDENT" unique="true">
+            <column name="IDD"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20200622-03" author="ovcharov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы TEACHER</comment>
+        <sql>
+            create table TEACHER (
+                id serial primary key,
+                idd int not null,
+                first_name varchar(50),
+                middle_name varchar(50),
+                last_name varchar(50),
+                passport varchar(15),
+                birth_date timestamp,
+                create_date timestamp,
+                delete_date timestamp,
+                status varchar(10)
+            );
+            create unique index idx_teacher_idd on TEACHER (idd);
+        </sql>
+        <rollback>
+            <sql>
+                drop table TEACHER;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-04" author="ovcharov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="USERS" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы USERS</comment>
+        <sqlFile path="sql/users.sql" relativeToChangelogFile="true"/>
+        <rollback>
+            <sqlFile path="sql/users_rollback.sql" relativeToChangelogFile="true"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-05" author="ovcharov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы COURSE</comment>
+        <createTable tableName="COURSE">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(100)"/>
+            <column name="DESCRIPTION" type="varchar(500)"/>
+            <column name="TEACHER_IDD" type="int">
+                <constraints  nullable="false" foreignKeyName="FK_COURSE_TEACHER" references="TEACHER (IDD)" />
+            </column>
+            <column name="MAX_COUNT_STUDENT" type="int"/>
+            <column name="START_DATE" type="timestamp(0)"/>
+            <column name="END_DATE" type="timestamp(0)"/>
+            <column name="CREATE_DATE" type="timestamp(0)"/>
+            <column name="DELETE_DATE" type="timestamp(0)"/>
+            <column name="STATUS" type="varchar(10)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="COURSE" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-06" author="ovcharov">
+        <comment>Создание уникального индекса idx_course_idd</comment>
+        <createIndex indexName="idx_course_idd" tableName="COURSE" unique="true">
+            <column name="IDD"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20200622-07" author="ovcharov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы STUDENT_TO_COURSE</comment>
+        <createTable tableName="STUDENT_TO_COURSE">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="STUDENT_IDD" type="int">
+                <constraints  nullable="false" foreignKeyName="FK_STUDENT" references="STUDENT (IDD)" />
+            </column>
+            <column name="COURSE_IDD" type="int">
+                <constraints  nullable="false" foreignKeyName="FK_COURSE" references="COURSE (IDD)" />
+            </column>
+            <column name="SUCCESS" type="boolean"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="STUDENT_TO_COURSE" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-08" author="ovcharov">
+        <comment>Создание уникального индекса idx_room_idd</comment>
+        <createIndex indexName="idx_room_idd" tableName="ROOM" unique="true">
+            <column name="IDD"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20200622-09" author="ovcharov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы LESSON</comment>
+        <sql>
+            create table LESSON (
+            id serial primary key,
+            name varchar(100),
+            description varchar(1000),
+            course_idd int references COURSE (IDD),
+            room_idd int references ROOM (IDD),
+            lesson_date_start timestamp,
+            lesson_date_end timestamp,
+            extra_instruments varchar(1000)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table LESSON;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-10" author="ovcharov">
+        <comment>Создание уникального индекса idx_instrument_idd</comment>
+        <createIndex indexName="idx_instrument_idd" tableName="INSTRUMENT" unique="true">
+            <column name="IDD"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20200622-11" author="ovcharov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы LESSON_TO_INSTRUMENT</comment>
+        <sql>
+            create table LESSON_TO_INSTRUMENT (
+            id serial primary key,
+            lesson_id int references LESSON (ID),
+            instrument_idd int references INSTRUMENT (IDD)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table LESSON_TO_INSTRUMENT;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

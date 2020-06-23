@@ -16,13 +16,13 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.14</version>
+            <version>42.2.5</version>
         </dependency>
     </dependencies>
 
     <profiles>
         <profile>
-            <id>polovnikov</id>
+            <id>ovcharov</id>
             <properties>
                 <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
                 <username>admin</username>
