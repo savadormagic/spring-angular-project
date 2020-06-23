@@ -1,4 +1,4 @@
-Student(
++Student(
     id serial,
     idd int,
     first_name varchar(50),
@@ -10,8 +10,23 @@ Student(
     delete_date timestamp,
     status varchar(10)
 )
-Teacher()
-User()
+
++Teacher(
+    id serial,
+    idd int,
+    first_name varchar(50),
+    middle_name varchar(50),
+    last_name varchar(50),
+    passport varchar(15),
+    degree varchar(25),
+    birth_date timestamp,
+    create_date timestamp,
+    delete_date timestamp,
+    status varchar(10)
+)
+
+?User()
+
 Course(
     id serial,
     idd int,
@@ -25,6 +40,7 @@ Course(
     delete_date timestamp,
     status varchar(10)
 )
+
 Student_to_course(
     id serial,
     student_idd int,
@@ -32,15 +48,16 @@ Student_to_course(
     success boolean
 )
 
-Room(
++Room(
     id serial,
     idd int,
     number varchar(5),
-    block varchar(5),
-    max_students int,
+    block varchar(5), --Корпус
+    max_students int, --В changelog-1 данного поля нет
     create_date timestamp,
     delete_date timestamp
 )
+
 Lesson(
     id serial,
     name varchar(100),
@@ -48,18 +65,26 @@ Lesson(
     course_idd int,
     room_idd int,
     lesson_date_start timestamp,
-    lesson_date_end timestamp,
-    extra_instruments varchar(1000) //PRINTER,SENSOR_BOARD,...
+    lesson_date_end timestamp
 )
 
-Lesson_to_Instruments()
-Room_to_Instruments()
+Instrument_to_lesson(
+    id serial,
+    instrument_idd int,
+    lesson_idd
+)
 
-Instruments(
-    id serial
++Instrument_to_room(
+    id serial,
+    instrument_idd int,
+    room_idd int
+)
+
++Instrument(
+    id serial,
     idd int,
-    name varchar(50),
-    number varchar(),
+    name varchar(50), --В changelog-1 данного поля нет
+    number varchar(), --Инвертарный номер. В changelog-1 varchar(50)
     create_date timestamp,
     delete_date timestamp
 )
