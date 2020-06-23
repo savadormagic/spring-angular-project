@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+    <changeSet id="20200620-00" author="martyshenko">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200623-01" author="martyshenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENT" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы STUDENT</comment>
+        <sql>
+            create table STUDENT (
+                id serial primary key,
+                idd int not null,
+                first_name varchar(50),
+                middle_name varchar(50),
+                last_name varchar(50),
+                passport varchar(15) not null,
+                birth_date timestamp(0),
+                create_date timestamp(0) not null,
+                delete_date timestamp(0),
+                status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table if exists STUDENT;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-02" author="martyshenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TEACHER" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы TEACHER</comment>
+        <sql>
+            create table TEACHER (
+                id serial primary key,
+                idd int not null,
+                first_name varchar(50),
+                middle_name varchar(50),
+                last_name varchar(50),
+                passport varchar(15) not null,
+                birth_date timestamp(0),
+                create_date timestamp(0) not null,
+                delete_date timestamp(0),
+                status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table if exists TEACHER;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-03" author="martyshenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="DEF_USER" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы DEF_USER</comment>
+        <sql>
+            create table DEF_USER (
+                id serial primary key,
+                idd int not null,
+                first_name varchar(50),
+                middle_name varchar(50),
+                last_name varchar(50),
+                passport varchar(15) not null,
+                birth_date timestamp(0),
+                create_date timestamp(0) not null,
+                delete_date timestamp(0),
+                status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table if exists DEF_USER;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-04" author="martyshenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы COURSE</comment>
+        <sql>
+            create table COURSE (
+                id serial primary key,
+                idd int not null,
+                name varchar(100),
+                description varchar(500),
+                teacher_idd int not null,
+                max_count_student int,
+                start_date timestamp(0),
+                end_date timestamp(0),
+                create_date timestamp(0) not null,
+                delete_date timestamp(0),
+                status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table if exists COURSE;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-05" author="martyshenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы STUDENT_TO_COURSE</comment>
+        <sql>
+            create table STUDENT_TO_COURSE (
+                id serial primary key,
+                student_idd int not null,
+                course_idd int not null,
+                success boolean
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table if exists STUDENT_TO_COURSE;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-06" author="martyshenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы LESSON</comment>
+        <sql>
+            create table LESSON (
+                id serial primary key,
+                name varchar(100),
+                description varchar(1000),
+                course_idd int not null,
+                room_idd int not null,
+                lesson_date_start timestamp(0),
+                lesson_date_end timestamp(0),
+                extra_instruments varchar(1000)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table if exists LESSON;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-07" author="martyshenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы LESSON_TO_INSTRUMENT</comment>
+        <sql>
+            create table LESSON_TO_INSTRUMENT (
+                id serial primary key,
+                lesson_idd int not null,
+                instrument_idd int not null
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table if exists LESSON_TO_INSTRUMENT;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200623-08" author="martyshenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ROOM_TO_INSTRUMENT" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы ROOM_TO_INSTRUMENT</comment>
+        <sql>
+            create table ROOM_TO_INSTRUMENT (
+                id serial primary key,
+                room_idd int not null,
+                instrument_idd int not null
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table if exists ROOM_TO_INSTRUMENT;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

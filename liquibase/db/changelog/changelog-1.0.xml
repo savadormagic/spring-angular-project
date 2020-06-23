@@ -120,7 +120,7 @@
         </sql>
         <rollback>
             <sql>
-                drop table ROOM;
+                drop table if exists ROOM;
             </sql>
         </rollback>
     </changeSet>

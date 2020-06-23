@@ -1,1 +1,1 @@
-drop table INSTRUMENT_TO_ROOM;
+drop table if exists INSTRUMENT_TO_ROOM;
