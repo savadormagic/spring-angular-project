@@ -148,7 +148,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="230620209" author="Khoshimov">
+    <changeSet id="230620210" author="Khoshimov">
         <preConditions onFail="MARK_RAN">
             <not>
                     <tableExists tableName="Lesson_to_Instruments" schemaName="public" />
