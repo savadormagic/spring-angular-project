@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200622-06" author="kapitanov">
+        <preConditions>
+            <not>
+                <tableExists tableName="instruments_to_rooms" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Create table instruments_to_rooms</comment>
+        <sql>
+            create table instruments_to_rooms (
+            id serial,
+            instrument_idd int,
+            room_idd int,
+            constraint pk_itr_id primary key(id),
+            constraint fk_itr_instrument foreign key(instrument_idd)
+            references instruments(id),
+            constraint fk_itr_room foreign key(room_idd)
+            references rooms(id)
+            )
+        </sql>
+        <rollback>
+            <sql>
+                drop table instruments_to_rooms;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

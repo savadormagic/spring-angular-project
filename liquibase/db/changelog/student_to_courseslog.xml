@@ -1,0 +1,34 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200622-11" author="kapitanov">
+        <preConditions>
+            <not>
+                <tableExists tableName="student_to_courses" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Create table student_to_courses</comment>
+        <sql>
+            create table student_to_courses (
+            id serial,
+            student_idd int,
+            course_idd int,
+            success boolean,
+            constraint pk_student_to_courses_id primary key(id),
+            constraint fk_students foreign key(student_idd)
+            references students(id),
+            constraint fk_courses foreign key(course_idd)
+            references courses(id)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table student_to_courses;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200622-10" author="kapitanov">
+        <preConditions>
+            <not>
+                <tableExists tableName="courses" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Create table courses</comment>
+
+        <sql>
+            create table courses (
+            id serial,
+            idd int not null,
+            name varchar(100),
+            description varchar(500),
+            teacher_idd int,
+            max_count_student int,
+            start_date timestamp(0),
+            end_date timestamp(0),
+            create_date timestamp(0),
+            delete_date timestamp(0),
+            status varchar(10),
+            constraint pk_courses_id primary key(id),
+            constraint fk_courses_teachers foreign key(teacher_idd)
+            references teachers(id)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table courses;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

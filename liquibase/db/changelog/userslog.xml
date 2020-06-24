@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+<changeSet id="20200622-09" author="kapitanov">
+    <preConditions>
+        <not>
+            <tableExists tableName="users" schemaName="public"/>
+        </not>
+    </preConditions>
+    <comment>Create table users</comment>
+    <sql>
+        create table users (
+        id serial,
+        idd int not null,
+        first_name varchar(50),
+        last_name varchar(50),
+        email varchar(20),
+        username varchar(15),
+        password varchar(15),
+        constraint pk_users_id primary key(id)
+        );
+    </sql>
+    <rollback>
+        <sql>
+            drop table users;
+        </sql>
+    </rollback>
+</changeSet>
+
+</databaseChangeLog>

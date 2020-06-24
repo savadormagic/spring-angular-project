@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200622-01" author="kapitanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="instruments" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="instruments">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="instruments" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-02" author="kapitanov">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="instruments" schemaName="public"/>
+                <not>
+                    <columnExists tableName="instruments" columnName="idd"/>
+                </not>
+            </and>
+        </preConditions>
+        <addColumn tableName="instruments">
+            <column name="idd" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="instruments" columnName="idd"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-03" author="kapitanov">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="instruments" schemaName="public"/>
+                <not>
+                    <columnExists tableName="instruments" columnName="number"/>
+                </not>
+                <not>
+                    <columnExists tableName="instruments" columnName="create_date"/>
+                </not>
+                <not>
+                    <columnExists tableName="instruments" columnName="delete_date"/>
+                </not>
+                <not>
+                    <columnExists tableName="instruments" columnName="to_be_deleted"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Add columns</comment>
+        <addColumn tableName="instruments">
+            <column name="number" type="varchar(50)"/>
+            <column name="create_date" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delete_date" type="timestamp(0)"/>
+            <column name="to_be_deleted" type="boolean"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="instruments" columnName="number"/>
+            <dropColumn tableName="instruments" columnName="create_date"/>
+            <dropColumn tableName="instruments" columnName="delete_date"/>
+            <dropColumn tableName="instruments" columnName="to_be_deleted"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200622-04" author="kapitanov">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="instruments" schemaName="public"/>
+                <columnExists tableName="instruments" columnName="to_be_deleted"/>
+            </and>
+        </preConditions>
+        <dropColumn tableName="instruments" columnName="to_be_deleted"/>
+        <rollback>
+            <addColumn tableName="instruments">
+                <column name="to_be_deleted" type="boolean"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

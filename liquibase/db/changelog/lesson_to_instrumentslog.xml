@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200622-13" author="kapitanov">
+        <preConditions>
+            <not>
+                <tableExists tableName="lesson_to_instruments" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Create table lesson_to_instruments</comment>
+        <sql>
+            create table lesson_to_instruments (
+            id serial,
+            instrument_idd int,
+            lesson_idd int,
+            constraint pk_li_id primary key(id),
+            constraint fk_li_instrument foreign key(instrument_idd)
+            references instruments(id),
+            constraint fk_li_lesson foreign key(lesson_idd)
+            references lessons(id)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table lesson_to_instruments;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
