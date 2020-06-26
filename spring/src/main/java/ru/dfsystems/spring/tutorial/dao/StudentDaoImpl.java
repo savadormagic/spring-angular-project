@@ -10,9 +10,10 @@ import org.springframework.stereotype.Repository;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.room.RoomParams;
-import ru.dfsystems.spring.tutorial.generated.tables.daos.RoomDao;
-import ru.dfsystems.spring.tutorial.generated.tables.pojos.Room;
-import ru.dfsystems.spring.tutorial.generated.tables.records.RoomRecord;
+import ru.dfsystems.spring.tutorial.dto.student.StudentParams;
+import ru.dfsystems.spring.tutorial.generated.tables.daos.StudentDao;
+import ru.dfsystems.spring.tutorial.generated.tables.Student;
+import ru.dfsystems.spring.tutorial.generated.tables.records.StudentRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,41 +22,42 @@ import static ru.dfsystems.spring.tutorial.generated.tables.Room.ROOM;
 
 @Repository
 @AllArgsConstructor
-public class RoomDaoImpl extends RoomDao {
+public class StudentDaoImpl extends StudentDao {
     private final DSLContext jooq;
 
-    public Room getActiveByIdd(Integer idd) {
-        return jooq.select(ROOM.fields())
-                .from(ROOM)
-                .where(ROOM.IDD.eq(idd).and(ROOM.DELETE_DATE.isNull()))
-                .fetchOneInto(Room.class);
+    public Student getActiveByIdd(Integer idd) {
+        return jooq.select(Student.STUDENT.fields())
+                .from(Student.STUDENT)
+                .where(Student.STUDENT.IDD.eq(idd).and(Student.STUDENT.DELETE_DATE.isNull()))
+                .fetchOneInto(Student.class);
     }
 
-    public Page<Room> getRoomsByParams(PageParams<RoomParams> pageParams) {
-        final RoomParams params = pageParams.getParams() == null ? new RoomParams() : pageParams.getParams();
+    public Page<Student> getRoomsByParams(PageParams<StudentParams> pageParams) {
+        final StudentParams params = pageParams.getParams() == null ? new StudentParams() : pageParams.getParams();
         val listQuery = getRoomSelect(params);
 
         val count = jooq.selectCount()
                 .from(listQuery)
                 .fetchOne(0, Long.class);
 
-        List<Room> list = listQuery.offset(pageParams.getStart())
+        List<Student> list = listQuery.offset(pageParams.getStart())
                 .limit(pageParams.getPage())
-                .fetchInto(Room.class);
+                .fetchInto(Student.class);
 
         return new Page<>(list, count);
     }
 
-    private SelectSeekStepN<RoomRecord> getRoomSelect(RoomParams params){
-        var condition = ROOM.DELETE_DATE.isNull();
-        if (!params.getBlock().isEmpty()){
+    private SelectSeekStepN<StudentRecord> getStudentSelect(StudentParams params){
+        params.
+        var condition = Student.STUDENT.DELETE_DATE.isNull();
+        if (!params.isEmpty()){
             condition = condition.and(ROOM.BLOCK.like(params.getBlock()));
         }
         if (!params.getNumber().isEmpty()){
-            condition = condition.and(ROOM.NUMBER.like(params.getNumber()));
+            condition = condition.and(Student.STUDENT.NUMBER.like(params.getNumber()));
         }
         if (params.getCreateDateStart() != null && params.getCreateDateEnd() != null){
-            condition = condition.and(ROOM.CREATE_DATE.between(params.getCreateDateStart(), params.getCreateDateEnd()));
+            condition = condition.and(Student.STUDENT.CREATE_DATE.between(params.getCreateDateStart(), params.getCreateDateEnd()));
         }
 
         val sort = getOrderBy(params.getOrderBy(), params.getOrderDir());
