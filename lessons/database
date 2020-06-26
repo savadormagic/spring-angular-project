@@ -27,7 +27,7 @@
 
 ?User()
 
-Course(
++Course(
     id serial,
     idd int,
     name varchar(100),
@@ -41,7 +41,7 @@ Course(
     status varchar(10)
 )
 
-Student_to_course(
++Student_to_course(
     id serial,
     student_idd int,
     course_idd int,
@@ -58,7 +58,7 @@ Student_to_course(
     delete_date timestamp
 )
 
-Lesson(
++Lesson(
     id serial,
     name varchar(100),
     description varchar(1000),
@@ -68,10 +68,10 @@ Lesson(
     lesson_date_end timestamp
 )
 
-Instrument_to_lesson(
++Instrument_to_lesson(
     id serial,
     instrument_idd int,
-    lesson_idd
+    lesson_idd int
 )
 
 +Instrument_to_room(

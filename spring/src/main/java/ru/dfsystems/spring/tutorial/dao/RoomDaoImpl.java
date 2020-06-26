@@ -45,7 +45,7 @@ public class RoomDaoImpl extends RoomDao {
 
         return new Page<>(list, count);
     }
-
+    //Чтение всех room удовлетворяющих условию + сортировка
     private SelectSeekStepN<RoomRecord> getRoomSelect(RoomParams params){
         var condition = ROOM.DELETE_DATE.isNull();
         if (!params.getBlock().isEmpty()){
@@ -64,7 +64,7 @@ public class RoomDaoImpl extends RoomDao {
                 .where(condition)
                 .orderBy(sort);
     }
-
+    //Заполнение переменной для обеспечения сортировки
     private SortField[] getOrderBy(String orderBy, String orderDir){
         val asc = orderDir != null && orderDir.equalsIgnoreCase("asc");
 
