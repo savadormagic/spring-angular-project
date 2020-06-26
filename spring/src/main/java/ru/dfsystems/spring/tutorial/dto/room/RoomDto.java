@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.dfsystems.spring.tutorial.dto.BaseDto;
 import ru.dfsystems.spring.tutorial.dto.instrument.InstrumentListDto;
+import ru.dfsystems.spring.tutorial.dto.lesson.LessonListDto;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public class RoomDto extends BaseDto<RoomHistoryDto> {
     private String block;
 
     private List<InstrumentListDto> instruments;
+    private List<LessonListDto> lessons;
 }
