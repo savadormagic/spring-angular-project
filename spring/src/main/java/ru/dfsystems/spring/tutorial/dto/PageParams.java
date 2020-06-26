@@ -8,5 +8,7 @@ import java.io.Serializable;
 public class PageParams<T> implements Serializable {
     private int start;
     private int page;
+    private String orderBy;
+    private String orderDir;
     private T params;
 }
