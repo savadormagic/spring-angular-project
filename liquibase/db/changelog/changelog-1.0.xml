@@ -109,24 +109,24 @@
         </preConditions>
         <comment>Lesson 1. Liquibase. Создание таблицы ROOM</comment>
         <sql>
-            create table ROOM (
-                id serial primary key,
-                idd int not null,
-                number varchar(5),
-                block varchar(5),
-                create_date timestamp(0) not null,
-                delete_date timestamp(0)
+            create table "ROOM" (
+            id serial primary key,
+            idd int not null,
+            number varchar(5),
+            block varchar(5),
+            create_date timestamp(0) not null,
+            delete_date timestamp(0)
             );
         </sql>
         <rollback>
             <sql>
-                drop table ROOM;
+                drop table "ROOM";
             </sql>
         </rollback>
     </changeSet>
 
     <changeSet id="20200620-06" author="polovikov">
-        <preConditions>
+        <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="INSTRUMENT_TO_ROOM" schemaName="public"/>
             </not>

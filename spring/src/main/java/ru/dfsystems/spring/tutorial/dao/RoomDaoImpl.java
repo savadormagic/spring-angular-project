@@ -13,6 +13,10 @@ import static ru.dfsystems.spring.tutorial.generated.tables.Room.ROOM;
 public class RoomDaoImpl extends RoomDao {
     private final DSLContext jooq;
 
+    public RoomDaoImpl(DSLContext jooq) {
+        this.jooq = jooq;
+    }
+
     public Room getActiveByIdd(Integer idd) {
         return jooq.select(ROOM.fields())
                 .from(ROOM)

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200625-00" author="grigoriev">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+<!--    Student-->
+    <changeSet id="20200625-01" author="grigoriev">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <not>
+                    <tableExists tableName="STUDENT" schemaName="public"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Create STUDENT</comment>
+        <sql>
+            create table STUDENT (
+            id serial primary key,
+            idd int not null,
+            first_name varchar(50),
+            middle_name varchar(50),
+            last_name varchar(50),
+            passport varchar(15),
+            birth_date timestamp,
+            create_date timestamp(0) not null,
+            delete_date timestamp(0),
+            status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table STUDENT;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <!--    Course-->
+    <changeSet id="20200625-02" author="grigoriev">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <not>
+                    <tableExists tableName="COURSE" schemaName="public"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Create COURSE</comment>
+        <sql>
+            create table COURSE (
+            id serial primary key,
+            idd int,
+            name varchar(100),
+            description varchar(500),
+            teacher_idd int,
+            max_count_student int,
+            start_date timestamp(0),
+            end_date timestamp(0),
+            create_date timestamp(0) not null,
+            delete_date timestamp(0),
+            status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table COURSE;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <!--    Student_To_Course-->
+    <changeSet id="20200625-03" author="grigoriev">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <not>
+                    <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Create STUDENT_TO_COURSE</comment>
+        <sql>
+            create table STUDENT_TO_COURSE (
+            id serial primary key,
+            student_idd int,
+            course_idd int,
+            success boolean
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table STUDENT_TO_COURSE;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <!--    Lesson-->
+    <changeSet id="20200625-04" author="grigoriev">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <not>
+                    <tableExists tableName="LESSON" schemaName="public"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Create LESSON</comment>
+        <sql>
+            create table LESSON (
+            id serial primary key,
+            name varchar(100) not null,
+            description varchar(1000),
+            course_idd int,
+            room_idd int,
+            lesson_date_start timestamp(0),
+            lesson_date_end timestamp(0),
+            extra_instruments varchar(1000)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table LESSON;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <!--    Teacher-->
+    <changeSet id="20200625-05" author="grigoriev">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <not>
+                    <tableExists tableName="TEACHER" schemaName="public"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Create TEACHER</comment>
+        <sql>
+            create table TEACHER (
+            id serial primary key,
+            idd int,
+            first_name varchar(50),
+            middle_name varchar(50),
+            last_name varchar(50),
+            course_idd int,
+            create_date timestamp(0),
+            delete_date timestamp(0),
+            status varchar(10)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table TEACHER;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <!--    User-->
+    <changeSet id="20200625-06" author="grigoriev">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <not>
+                    <tableExists tableName="USER" schemaName="public"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Create USER</comment>
+        <sql>
+            create table "USER" (
+            id serial primary key,
+            idd int,
+            login varchar(50),
+            password varchar(50),
+            first_name varchar(50),
+            middle_name varchar(50),
+            last_name varchar(50),
+            course_idd int,
+            create_date timestamp(0),
+            delete_date timestamp(0)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table "USER";
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
