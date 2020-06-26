@@ -246,4 +246,26 @@
             drop table INSTRUMENT_TO_LESSON;
         </rollback>
     </changeSet>
+
+    <changeSet id="20200622-12" author="igorgilew">
+        <tagDatabase tag="changelog-2.0"/>
+    </changeSet>
+
+    <changeSet id="20200622-13" author="igorgilew">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="INSTRUMENT" schemaName="public"/>
+                <not>
+                    <columnExists tableName="INSTRUMENT" columnName="name"/>
+                </not>
+            </and>
+        </preConditions>
+        <sql>
+            alter table INSTRUMENT add column name varchar(50);
+        </sql>
+        <rollback>
+            alter table INSTRUMENT drop column name;
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>
