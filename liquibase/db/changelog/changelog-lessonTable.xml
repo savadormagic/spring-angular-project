@@ -110,12 +110,12 @@
                 </not>
             </and>
         </preConditions>
-        <comment>Добавление колонки START_DATE к LESSON</comment>
+        <comment>Добавление колонки LESSON_DATE_START к LESSON</comment>
         <addColumn tableName="LESSON">
-            <column name="START_DATE" type="timestamp(0)"/>
+            <column name="LESSON_DATE_START" type="timestamp(0)"/>
         </addColumn>
         <rollback>
-            <dropColumn tableName="LESSON" columnName="START_DATE"/>
+            <dropColumn tableName="LESSON" columnName="LESSON_DATE_START"/>
         </rollback>
     </changeSet>
 
@@ -148,7 +148,7 @@
         </preConditions>
         <comment>Добавление колонки EXTRA_INSTRUMENTS к LESSON</comment>
         <addColumn tableName="LESSON">
-            <column name="EXTRA_INSTRUMENTS" type="timestamp(0)"/>
+            <column name="EXTRA_INSTRUMENTS" type="varchar(1000)"/>
         </addColumn>
         <rollback>
             <dropColumn tableName="LESSON" columnName="EXTRA_INSTRUMENTS"/>

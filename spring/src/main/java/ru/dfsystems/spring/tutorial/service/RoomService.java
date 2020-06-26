@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class RoomService {
-    private RoomDaoImpl roomDao;
+    private final RoomDaoImpl roomDao;
 
     public List<Room> getAllRooms() {
         roomDao.fetchOneById(152);
