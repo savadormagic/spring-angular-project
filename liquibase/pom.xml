@@ -24,11 +24,21 @@
         <profile>
             <id>polovnikov</id>
             <properties>
-                <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
+                <url>jdbc:postgresql://localhost:5432/spring-angular-db</url>
                 <username>admin</username>
                 <password>admin</password>
             </properties>
         </profile>
+
+        <profile>
+            <id>dev</id>
+            <properties>
+                <url>jdbc:postgresql://localhost:5432/spring-angular-db</url>
+                <username>postgres</username>
+                <password>postgres</password>
+            </properties>
+        </profile>
+
     </profiles>
 
     <build>
