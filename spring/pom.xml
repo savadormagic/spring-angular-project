@@ -131,7 +131,9 @@
                             <includes>
                                 ROOM |
                                 INSTRUMENT |
-                                INSTRUMENT_TO_ROOM
+                                INSTRUMENT_TO_ROOM |
+                                ROOM_ID_SEQ |
+                                INSTRUMENT_ID_SEQ
                             </includes>
 
                             <schemata>
@@ -149,6 +151,7 @@
                         <generate>
                             <pojos>true</pojos>
                             <daos>true</daos>
+                            <sequences>true</sequences>
                             <validationAnnotations>true</validationAnnotations>
                             <springAnnotations>true</springAnnotations>
                             <globalObjectReferences>true</globalObjectReferences>
