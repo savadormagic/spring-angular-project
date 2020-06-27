@@ -22,13 +22,17 @@
             <column name="ID" type="serial" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="IDD" type="int"/>
+            <column name="IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
             <column name="FIRST_NAME" type="varchar(50)"/>
             <column name="MIDDLE_NAME" type="varchar(50)"/>
             <column name="LAST_NAME" type="varchar(50)"/>
             <column name="PASSPORT" type="varchar(15)"/>
             <column name="BIRTH_DATE" type="timestamp(0)"/>
-            <column name="CREATE_DATE" type="timestamp(0)"/>
+            <column name="CREATE_DATE" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
             <column name="DELETE_DATE" type="timestamp(0)"/>
             <column name="STATUS" type="varchar(10)"/>
         </createTable>
@@ -38,13 +42,6 @@
     </changeSet>
 
     <changeSet id="20200622-02" author="ovcharov">
-        <comment>Создание уникального индекса idx_student_idd</comment>
-        <createIndex indexName="idx_student_idd" tableName="STUDENT" unique="true">
-            <column name="IDD"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="20200622-03" author="ovcharov">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="TEACHER" schemaName="public"/>
@@ -60,7 +57,7 @@
                 last_name varchar(50),
                 passport varchar(15),
                 birth_date timestamp,
-                create_date timestamp,
+                create_date timestamp not null,
                 delete_date timestamp,
                 status varchar(10)
             );
@@ -73,7 +70,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200622-04" author="ovcharov">
+    <changeSet id="20200622-03" author="ovcharov">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="USERS" schemaName="public"/>
@@ -86,7 +83,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200622-05" author="ovcharov">
+    <changeSet id="20200622-04" author="ovcharov">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="COURSE" schemaName="public"/>
@@ -102,13 +99,13 @@
             </column>
             <column name="NAME" type="varchar(100)"/>
             <column name="DESCRIPTION" type="varchar(500)"/>
-            <column name="TEACHER_IDD" type="int">
-                <constraints  nullable="false" foreignKeyName="FK_COURSE_TEACHER" references="TEACHER (IDD)" />
-            </column>
+            <column name="TEACHER_IDD" type="int"/>
             <column name="MAX_COUNT_STUDENT" type="int"/>
             <column name="START_DATE" type="timestamp(0)"/>
             <column name="END_DATE" type="timestamp(0)"/>
-            <column name="CREATE_DATE" type="timestamp(0)"/>
+            <column name="CREATE_DATE" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
             <column name="DELETE_DATE" type="timestamp(0)"/>
             <column name="STATUS" type="varchar(10)"/>
         </createTable>
@@ -117,14 +114,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200622-06" author="ovcharov">
-        <comment>Создание уникального индекса idx_course_idd</comment>
-        <createIndex indexName="idx_course_idd" tableName="COURSE" unique="true">
-            <column name="IDD"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="20200622-07" author="ovcharov">
+    <changeSet id="20200622-05" author="ovcharov">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
@@ -135,12 +125,8 @@
             <column name="ID" type="serial" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="STUDENT_IDD" type="int">
-                <constraints  nullable="false" foreignKeyName="FK_STUDENT" references="STUDENT (IDD)" />
-            </column>
-            <column name="COURSE_IDD" type="int">
-                <constraints  nullable="false" foreignKeyName="FK_COURSE" references="COURSE (IDD)" />
-            </column>
+            <column name="STUDENT_IDD" type="int"/>
+            <column name="COURSE_IDD" type="int"/>
             <column name="SUCCESS" type="boolean"/>
         </createTable>
         <rollback>
@@ -148,14 +134,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200622-08" author="ovcharov">
-        <comment>Создание уникального индекса idx_room_idd</comment>
-        <createIndex indexName="idx_room_idd" tableName="ROOM" unique="true">
-            <column name="IDD"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="20200622-09" author="ovcharov">
+    <changeSet id="20200622-06" author="ovcharov">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="LESSON" schemaName="public"/>
@@ -167,8 +146,8 @@
             id serial primary key,
             name varchar(100),
             description varchar(1000),
-            course_idd int references COURSE (IDD),
-            room_idd int references ROOM (IDD),
+            course_idd int,
+            room_idd int,
             lesson_date_start timestamp,
             lesson_date_end timestamp,
             extra_instruments varchar(1000)
@@ -181,14 +160,7 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="20200622-10" author="ovcharov">
-        <comment>Создание уникального индекса idx_instrument_idd</comment>
-        <createIndex indexName="idx_instrument_idd" tableName="INSTRUMENT" unique="true">
-            <column name="IDD"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="20200622-11" author="ovcharov">
+    <changeSet id="20200622-07" author="ovcharov">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
@@ -198,8 +170,8 @@
         <sql>
             create table LESSON_TO_INSTRUMENT (
             id serial primary key,
-            lesson_id int references LESSON (ID),
-            instrument_idd int references INSTRUMENT (IDD)
+            lesson_id int,
+            instrument_idd int
             );
         </sql>
         <rollback>
