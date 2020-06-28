@@ -1,17 +1,8 @@
 package ru.dfsystems.spring.tutorial.mapping;
 
 import lombok.AllArgsConstructor;
-import org.modelmapper.ExpressionMap;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.builder.ConfigurableConditionExpression;
-import org.modelmapper.spi.SourceGetter;
 import org.springframework.stereotype.Service;
-import ru.dfsystems.spring.tutorial.dao.InstrumentDaoImpl;
-import ru.dfsystems.spring.tutorial.dao.RoomDaoImpl;
-import ru.dfsystems.spring.tutorial.dto.instrument.InstrumentListDto;
-import ru.dfsystems.spring.tutorial.dto.room.RoomDto;
-import ru.dfsystems.spring.tutorial.dto.room.RoomHistoryDto;
-import ru.dfsystems.spring.tutorial.generated.tables.pojos.Room;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
