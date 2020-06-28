@@ -3,15 +3,11 @@ package ru.dfsystems.spring.tutorial.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.dfsystems.spring.tutorial.dao.InstrumentDaoImpl;
 import ru.dfsystems.spring.tutorial.dao.RoomDaoImpl;
 import ru.dfsystems.spring.tutorial.dao.RoomListDao;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
-import ru.dfsystems.spring.tutorial.dto.instrument.InstrumentDto;
-import ru.dfsystems.spring.tutorial.dto.instrument.InstrumentListDto;
 import ru.dfsystems.spring.tutorial.dto.room.RoomDto;
-import ru.dfsystems.spring.tutorial.dto.room.RoomHistoryDto;
 import ru.dfsystems.spring.tutorial.dto.room.RoomListDto;
 import ru.dfsystems.spring.tutorial.dto.room.RoomParams;
 import ru.dfsystems.spring.tutorial.generated.tables.daos.InstrumentToRoomDao;
@@ -27,7 +23,6 @@ import java.util.List;
 public class RoomService {
     private RoomListDao roomListDao;
     private RoomDaoImpl roomDao;
-    private InstrumentDaoImpl instrumentDao;
     private InstrumentToRoomDao instrumentToRoomDao;
     private MappingService mappingService;
 
@@ -43,16 +38,7 @@ public class RoomService {
     }
 
     public RoomDto get(Integer idd) {
-        RoomDto dto = mappingService.map(roomDao.getActiveByIdd(idd), RoomDto.class);
-
-        dto.setHistory(getHistory(idd));
-        dto.setInstruments(mappingService.mapList(instrumentDao.getInstrumentsByRoomIdd(idd), InstrumentListDto.class));
-
-        return dto;
-    }
-
-    public List<RoomHistoryDto> getHistory(Integer idd) {
-        return mappingService.mapList(roomDao.getHistory(idd), RoomHistoryDto.class);
+        return mappingService.map(roomDao.getActiveByIdd(idd), RoomDto.class);
     }
 
     @Transactional
