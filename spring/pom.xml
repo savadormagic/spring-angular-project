@@ -129,12 +129,9 @@
                         <database>
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
                             <includes>
-                                ROOM |
-                                INSTRUMENT |
-                                INSTRUMENT_TO_ROOM |
-                                ROOM_ID_SEQ |
-                                INSTRUMENT_ID_SEQ
+                                .*
                             </includes>
+                            <excludes></excludes>
 
                             <schemata>
                                 <schema>
