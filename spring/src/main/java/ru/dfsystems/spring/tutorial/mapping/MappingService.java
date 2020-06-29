@@ -1,10 +1,8 @@
 package ru.dfsystems.spring.tutorial.mapping;
 
 import lombok.AllArgsConstructor;
-import org.modelmapper.ExpressionMap;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.builder.ConfigurableConditionExpression;
-import org.modelmapper.spi.SourceGetter;
 import org.springframework.stereotype.Service;
 import ru.dfsystems.spring.tutorial.dao.InstrumentDaoImpl;
 import ru.dfsystems.spring.tutorial.dao.RoomDaoImpl;
@@ -21,10 +19,20 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MappingService {
     private ModelMapper modelMapper;
+    private RoomDaoImpl roomDao;
+    private InstrumentDaoImpl instrumentDao;
 
     @PostConstruct
     public void init() {
         //Дополнительные настройки.
+        Converter<Integer, List<RoomHistoryDto>> roomHistory =
+                context -> mapList(roomDao.getHistory(context.getSource()), RoomHistoryDto.class);
+        Converter<Integer, List<InstrumentListDto>> instrumentList =
+                context -> mapList(instrumentDao.getInstrumentsByRoomIdd(context.getSource()), InstrumentListDto.class);
+
+        modelMapper.typeMap(Room.class, RoomDto.class)
+                .addMappings(mapper -> mapper.using(roomHistory).map(Room::getIdd, RoomDto::setHistory))
+                .addMappings(mapper -> mapper.using(instrumentList).map(Room::getIdd, RoomDto::setInstruments));
     }
 
     public <S, D> D map(S source, Class<D> clazz) {

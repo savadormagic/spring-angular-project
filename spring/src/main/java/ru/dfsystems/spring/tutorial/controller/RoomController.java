@@ -4,16 +4,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.dfsystems.spring.tutorial.dto.BaseListDto;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.room.RoomDto;
-import ru.dfsystems.spring.tutorial.dto.room.RoomHistoryDto;
 import ru.dfsystems.spring.tutorial.dto.room.RoomListDto;
 import ru.dfsystems.spring.tutorial.dto.room.RoomParams;
 import ru.dfsystems.spring.tutorial.service.RoomService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/room", produces = "application/json; charset=UTF-8")
@@ -44,11 +40,6 @@ public class RoomController {
     @ApiOperation(value = "Обновить аудиторию")
     public RoomDto update(@PathVariable("idd") Integer idd, @RequestBody RoomDto roomDto) {
         return roomService.update(idd, roomDto);
-    }
-
-    @GetMapping("/{idd}/history")
-    public List<RoomHistoryDto> getHistory(@PathVariable("idd") Integer idd) {
-        return roomService.getHistory(idd);
     }
 
     @DeleteMapping("/{idd}")

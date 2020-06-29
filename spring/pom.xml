@@ -157,6 +157,7 @@
                                 course_id_seq |
                                 INSTRUMENT_ID_SEQ
                             </includes>
+                            <excludes></excludes>
 
                             <schemata>
                                 <schema>
