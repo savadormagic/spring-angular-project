@@ -129,10 +129,9 @@
                         <database>
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
                             <includes>
-                                ROOM |
-                                INSTRUMENT |
-                                INSTRUMENT_TO_ROOM
+                                .*
                             </includes>
+                            <excludes></excludes>
 
                             <schemata>
                                 <schema>
@@ -149,6 +148,7 @@
                         <generate>
                             <pojos>true</pojos>
                             <daos>true</daos>
+                            <sequences>true</sequences>
                             <validationAnnotations>true</validationAnnotations>
                             <springAnnotations>true</springAnnotations>
                             <globalObjectReferences>true</globalObjectReferences>
