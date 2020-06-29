@@ -4,7 +4,7 @@
 --precondition-sql-check expectedResult:0 select count(*) from (SELECT to_regclass('public.course') as res) as r where  res IS NOT NULL
 
 create  table  course  (
-    id          integer      not null
+    id          serial      not null
             primary key,
     idd         integer      not null,
     name  varchar(100)  not null,

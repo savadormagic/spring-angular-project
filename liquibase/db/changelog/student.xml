@@ -5,6 +5,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
+    <changeSet id="20200620-00" author="samoylov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="student_id_seq" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="student_id_seq" dataType="int" schemaName="public"/>
+        <rollback>
+            <dropSequence sequenceName="student_id_seq"/>
+        </rollback>
+    </changeSet>
+    
     <changeSet id="20200621-01" author="samoylov">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -13,8 +25,8 @@
         </preConditions>
         <comment>Создание таблицы Student</comment>
         <createTable tableName="student">
-            <column name="id" type="serial" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="id"  type="integer" defaultValueSequenceNext="student_id_seq">
+                <constraints primaryKey="true"/>
             </column>
             <column name="idd" type="int">
                 <constraints nullable="false"/>
@@ -27,7 +39,7 @@
             </column>
             <column name="middle_name" type="varchar(50)"/>
             <column name="passport" type="varchar(15)"/>
-            <column name="birth_date" type="timestamp(0)">
+            <column name="birth_date" type="date">
                 <constraints nullable="false"/>
             </column>
             <column name="create_date" type="timestamp(0)">

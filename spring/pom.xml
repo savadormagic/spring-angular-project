@@ -80,6 +80,16 @@
             <artifactId>modelmapper</artifactId>
             <version>2.3.8</version>
         </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -139,7 +149,12 @@
                                 student_to_course |
                                 teacher |
                                 user |
-                                ROOM_ID_SEQ |
+                                room_id_seq |
+                                teacher_id_seq |
+                                student_id_seq |
+                                user_id_seq |
+                                lesson_id_seq |
+                                course_id_seq |
                                 INSTRUMENT_ID_SEQ
                             </includes>
 

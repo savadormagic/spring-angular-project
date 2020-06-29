@@ -1,5 +1,23 @@
 databaseChangeLog:
   - changeSet:
+      id: 20200621-00
+      author: samoylov
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            sequenceExists:
+              sequenceName: user_id_seq
+              schemaName: public
+      changes:
+        - createSequence:
+            sequenceName: user_id_seq
+            dataType: int
+            schemaName: public
+      rollback:
+        - dropSequence:
+            sequenceName: user_id_seq
+            schemaName: public
+  - changeSet:
       id: 20200621-01
       author: samoylov
       preConditions:
@@ -15,8 +33,7 @@ databaseChangeLog:
             columns:
               - column:
                   name:  id
-                  type:  serial
-                  autoIncrement:  true
+                  type:  int
                   constraints:
                     primaryKey:  true
                     nullable:  false
