@@ -10,4 +10,5 @@ import ru.dfsystems.spring.tutorial.dto.BaseListDto;
 public class RoomListDto extends BaseListDto {
     private String number;
     private String block;
+    private int maxStudents;
 }

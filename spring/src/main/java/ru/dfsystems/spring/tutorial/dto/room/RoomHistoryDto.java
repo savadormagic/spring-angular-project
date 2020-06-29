@@ -9,4 +9,5 @@ import ru.dfsystems.spring.tutorial.dto.BaseHistoryDto;
 public class RoomHistoryDto extends BaseHistoryDto {
     private String number;
     private String block;
+    private int maxStudents;
 }
