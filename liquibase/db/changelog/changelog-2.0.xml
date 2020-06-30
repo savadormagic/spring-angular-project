@@ -23,6 +23,7 @@
             middle_name varchar(50),
             last_name varchar(50),
             passport varchar(15),
+            contacts varchar(50),
             birth_date timestamp(0),
             create_date timestamp(0) not null,
             delete_date timestamp(0),
@@ -52,6 +53,7 @@
             middle_name varchar(50),
             last_name varchar(50),
             passport varchar(15),
+            contacts varchar(50),
             birth_date timestamp(0),
             create_date timestamp(0) not null,
             delete_date timestamp(0),
@@ -66,33 +68,33 @@
     </changeSet>
 
     <!--    Создание таблицы USER-->
-    <changeSet id="30200620-03" author="KusakinFS">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="USERS" schemaName="public"/>
-            </not>
-        </preConditions>
-        <comment>Lesson 2. Liquibase. Создание таблицы USERS</comment>
-        <sql>
-            create table USERS (
-            id serial primary key,
-            idd int not null,
-            first_name varchar(50),
-            middle_name varchar(50),
-            last_name varchar(50),
-            passport varchar(15),
-            birth_date timestamp(0),
-            create_date timestamp(0) not null,
-            delete_date timestamp(0),
-            status varchar(10)
-            );
-        </sql>
-        <rollback>
-            <sql>
-                drop table USERS;
-            </sql>
-        </rollback>
-    </changeSet>
+    <!--    <changeSet id="30200620-03" author="KusakinFS">-->
+    <!--        <preConditions onFail="MARK_RAN">-->
+    <!--            <not>-->
+    <!--                <tableExists tableName="USERS" schemaName="public"/>-->
+    <!--            </not>-->
+    <!--        </preConditions>-->
+    <!--        <comment>Lesson 2. Liquibase. Создание таблицы USERS</comment>-->
+    <!--        <sql>-->
+    <!--            create table USERS (-->
+    <!--            id serial primary key,-->
+    <!--            idd int not null,-->
+    <!--            first_name varchar(50),-->
+    <!--            middle_name varchar(50),-->
+    <!--            last_name varchar(50),-->
+    <!--            passport varchar(15),-->
+    <!--            birth_date timestamp(0),-->
+    <!--            create_date timestamp(0) not null,-->
+    <!--            delete_date timestamp(0),-->
+    <!--            status varchar(10)-->
+    <!--            );-->
+    <!--        </sql>-->
+    <!--        <rollback>-->
+    <!--            <sql>-->
+    <!--                drop table USERS;-->
+    <!--            </sql>-->
+    <!--        </rollback>-->
+    <!--    </changeSet>-->
 
     <!--    Создание таблицы COURSE-->
     <changeSet id="30200620-04" author="KusakinFS">
