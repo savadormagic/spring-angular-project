@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.dfsystems.spring.tutorial.dao.RoomDaoImpl;
-import ru.dfsystems.spring.tutorial.dao.RoomListDao;
+import ru.dfsystems.spring.tutorial.dao.ListDao.RoomListDao;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.room.RoomDto;

@@ -10,20 +10,28 @@ import org.springframework.stereotype.Repository;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.teacher.TeacherParams;
-import ru.dfsystems.spring.tutorial.generated.tables.daos.RoomDao;
+import ru.dfsystems.spring.tutorial.generated.Sequences;
 import ru.dfsystems.spring.tutorial.generated.tables.daos.TeacherDao;
+import ru.dfsystems.spring.tutorial.generated.tables.daos.TeacherDao;
+import ru.dfsystems.spring.tutorial.generated.tables.pojos.Teacher;
 import ru.dfsystems.spring.tutorial.generated.tables.pojos.Teacher;
 import ru.dfsystems.spring.tutorial.generated.tables.records.TeacherRecord;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static ru.dfsystems.spring.tutorial.generated.tables.Teacher.TEACHER;
+import static ru.dfsystems.spring.tutorial.generated.tables.Teacher.TEACHER;
 
 @Repository
-@AllArgsConstructor
 public class TeacherDaoImpl extends TeacherDao {
     private final DSLContext jooq;
+
+    public TeacherDaoImpl(DSLContext jooq) {
+        super(jooq.configuration());
+        this.jooq = jooq;
+    }
 
     public Teacher getActiveByIdd(Integer idd) {
         return jooq.select(TEACHER.fields())
@@ -32,85 +40,20 @@ public class TeacherDaoImpl extends TeacherDao {
                 .fetchOneInto(Teacher.class);
     }
 
-    public Page<Teacher> getTeachersByParams(PageParams<TeacherParams> pageParams) {
-        final TeacherParams params = pageParams.getParams() == null ? new TeacherParams() : pageParams.getParams();
-        val listQuery = getTeacherSelect(params);
-
-        val count = jooq.selectCount()
-                .from(listQuery)
-                .fetchOne(0, Long.class);
-
-        List<Teacher> list = listQuery.offset(pageParams.getStart())
-                .limit(pageParams.getPage())
-                .fetchInto(Teacher.class);
-
-        return new Page<>(list, count);
-    }
-
-    private SelectSeekStepN<TeacherRecord> getTeacherSelect(TeacherParams params){
-        var condition = TEACHER.DELETE_DATE.isNull();
-        if (!params.getFirstName().isEmpty()){
-            condition = condition.and(TEACHER.FIRST_NAME.like(params.getFirstName()));
-        }
-        if (!params.getMiddleName().isEmpty()){
-            condition = condition.and(TEACHER.MIDDLE_NAME.like(params.getMiddleName()));
-        }
-        if (!params.getLastName().isEmpty()){
-            condition = condition.and(TEACHER.LAST_NAME.like(params.getLastName()));
-        }
-        if (!params.getPassport().isEmpty()){
-            condition = condition.and(TEACHER.PASSPORT.like(params.getPassport()));
-        }
-        if (!params.getStatus().isEmpty()){
-            condition = condition.and(TEACHER.STATUS.like(params.getStatus()));
-        }
-        if (params.getCreateDateStart() != null && params.getCreateDateEnd() != null){
-            condition = condition.and(TEACHER.CREATE_DATE.between(params.getCreateDateStart(), params.getCreateDateEnd()));
-        }
-
-        val sort = getOrderBy(params.getOrderBy(), params.getOrderDir());
-
+    public List<Teacher> getHistory(Integer idd) {
         return jooq.selectFrom(TEACHER)
-                .where(condition)
-                .orderBy(sort);
+                .where(TEACHER.IDD.eq(idd))
+                .fetchInto(Teacher.class);
     }
 
-    private SortField[] getOrderBy(String orderBy, String orderDir){
-        val asc = orderDir != null && orderDir.equalsIgnoreCase("asc");
-
-        if (orderBy == null){
-            return asc
-                    ? new SortField[]{TEACHER.IDD.asc()}
-                    : new SortField[]{TEACHER.IDD.desc()};
+    public void create(Teacher teacher) {
+        teacher.setId(jooq.nextval(Sequences.TEACHER_ID_SEQ));
+        if (teacher.getIdd() == null) {
+            teacher.setIdd(teacher.getId());
         }
-
-        val orderArray = orderBy.split(",");
-
-        List<SortField> listSortBy = new ArrayList<>();
-        for (val order: orderArray){
-            if (order.equalsIgnoreCase("idd")){
-                listSortBy.add(asc ? TEACHER.IDD.asc() : TEACHER.IDD.desc());
-            }
-            if (order.equalsIgnoreCase("firstName")){
-                listSortBy.add(asc ? TEACHER.FIRST_NAME.asc() : TEACHER.FIRST_NAME.desc());
-            }
-            if (order.equalsIgnoreCase("middleName")){
-                listSortBy.add(asc ? TEACHER.MIDDLE_NAME.asc() : TEACHER.MIDDLE_NAME.desc());
-            }
-            if (order.equalsIgnoreCase("lastName")){
-                listSortBy.add(asc ? TEACHER.LAST_NAME.asc() : TEACHER.LAST_NAME.desc());
-            }
-            if (order.equalsIgnoreCase("passport")){
-                listSortBy.add(asc ? TEACHER.PASSPORT.asc() : TEACHER.PASSPORT.desc());
-            }
-            if (order.equalsIgnoreCase("status")){
-                listSortBy.add(asc ? TEACHER.STATUS.asc() : TEACHER.STATUS.desc());
-            }
-            if (order.equalsIgnoreCase("createDate")){
-                listSortBy.add(asc ? TEACHER.CREATE_DATE.asc() : TEACHER.CREATE_DATE.desc());
-            }
-        }
-
-        return listSortBy.toArray(new SortField[0]);
+        teacher.setCreateDate(LocalDateTime.now());
+        super.insert(teacher);
     }
+
+    
 }

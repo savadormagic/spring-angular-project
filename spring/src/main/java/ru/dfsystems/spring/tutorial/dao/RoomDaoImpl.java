@@ -1,13 +1,23 @@
 package ru.dfsystems.spring.tutorial.dao;
 
+import lombok.val;
+import lombok.var;
 import org.jooq.DSLContext;
+import org.jooq.SelectSeekStepN;
+import org.jooq.SortField;
 import org.springframework.stereotype.Repository;
+//import ru.dfsystems.spring.tutorial.generated.Sequences;
+import ru.dfsystems.spring.tutorial.dto.Page;
+import ru.dfsystems.spring.tutorial.dto.PageParams;
+import ru.dfsystems.spring.tutorial.dto.room.RoomParams;
 import ru.dfsystems.spring.tutorial.generated.Sequences;
 import ru.dfsystems.spring.tutorial.generated.tables.daos.RoomDao;
 import ru.dfsystems.spring.tutorial.generated.tables.pojos.Instrument;
 import ru.dfsystems.spring.tutorial.generated.tables.pojos.Room;
+import ru.dfsystems.spring.tutorial.generated.tables.records.RoomRecord;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static ru.dfsystems.spring.tutorial.generated.tables.Room.ROOM;

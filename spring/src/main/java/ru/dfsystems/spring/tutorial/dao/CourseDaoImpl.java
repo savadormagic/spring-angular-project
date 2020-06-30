@@ -10,20 +10,28 @@ import org.springframework.stereotype.Repository;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.course.CourseParams;
+import ru.dfsystems.spring.tutorial.generated.Sequences;
 import ru.dfsystems.spring.tutorial.generated.tables.daos.CourseDao;
 import ru.dfsystems.spring.tutorial.generated.tables.daos.CourseDao;
 import ru.dfsystems.spring.tutorial.generated.tables.pojos.Course;
+import ru.dfsystems.spring.tutorial.generated.tables.pojos.Course;
 import ru.dfsystems.spring.tutorial.generated.tables.records.CourseRecord;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static ru.dfsystems.spring.tutorial.generated.tables.Course.COURSE;
+import static ru.dfsystems.spring.tutorial.generated.tables.Course.COURSE;
 
 @Repository
-@AllArgsConstructor
 public class CourseDaoImpl extends CourseDao {
     private final DSLContext jooq;
+
+    public CourseDaoImpl(DSLContext jooq) {
+        super(jooq.configuration());
+        this.jooq = jooq;
+    }
 
     public Course getActiveByIdd(Integer idd) {
         return jooq.select(COURSE.fields())
@@ -32,87 +40,18 @@ public class CourseDaoImpl extends CourseDao {
                 .fetchOneInto(Course.class);
     }
 
-    public Page<Course> getCoursesByParams(PageParams<CourseParams> pageParams) {
-        final CourseParams params = pageParams.getParams() == null ? new CourseParams() : pageParams.getParams();
-        val listQuery = getCourseSelect(params);
-
-        val count = jooq.selectCount()
-                .from(listQuery)
-                .fetchOne(0, Long.class);
-
-        List<Course> list = listQuery.offset(pageParams.getStart())
-                .limit(pageParams.getPage())
-                .fetchInto(Course.class);
-
-        return new Page<>(list, count);
-    }
-
-    private SelectSeekStepN<CourseRecord> getCourseSelect(CourseParams params){
-        var condition = COURSE.DELETE_DATE.isNull();
-        if (!params.getName().isEmpty()){
-            condition = condition.and(COURSE.NAME.like(params.getName()));
-        }
-        if (!params.getDescription().isEmpty()){
-            condition = condition.and(COURSE.DESCRIPTION.like(params.getDescription()));
-        }
-        if (params.getTeacher() != null){
-            condition = condition.and(COURSE.TEACHER_IDD.like(params.getTeacher().getIdd().toString()));
-        }
-        if (params.getMaxCountStudents() != null){
-            condition = condition.and(COURSE.MAX_COUNT_STUDENT.like(String.valueOf(params.getMaxCountStudents())));
-        }
-        if (params.getCreateDateStart() != null && params.getCreateDateEnd() != null){
-            condition = condition.and(COURSE.CREATE_DATE.between(params.getCreateDateStart(), params.getCreateDateEnd()));
-        }
-        if (!params.getStatus().isEmpty()){
-            condition = condition.and(COURSE.STATUS.like(params.getStatus()));
-        }
-        val sort = getOrderBy(params.getOrderBy(), params.getOrderDir());
-
+    public List<Course> getHistory(Integer idd) {
         return jooq.selectFrom(COURSE)
-                .where(condition)
-                .orderBy(sort);
+                .where(COURSE.IDD.eq(idd))
+                .fetchInto(Course.class);
     }
 
-    private SortField[] getOrderBy(String orderBy, String orderDir){
-        val asc = orderDir != null && orderDir.equalsIgnoreCase("asc");
-
-        if (orderBy == null){
-            return asc
-                    ? new SortField[]{COURSE.IDD.asc()}
-                    : new SortField[]{COURSE.IDD.desc()};
+    public void create(Course course) {
+        course.setId(jooq.nextval(Sequences.COURSE_ID_SEQ));
+        if (course.getIdd() == null) {
+            course.setIdd(course.getId());
         }
-
-        val orderArray = orderBy.split(",");
-
-        List<SortField> listSortBy = new ArrayList<>();
-        for (val order: orderArray){
-            if (order.equalsIgnoreCase("idd")){
-                listSortBy.add(asc ? COURSE.IDD.asc() : COURSE.IDD.desc());
-            }
-            if (order.equalsIgnoreCase("name")){
-                listSortBy.add(asc ? COURSE.NAME.asc() : COURSE.NAME.desc());
-            }
-            if (order.equalsIgnoreCase("description")){
-                listSortBy.add(asc ? COURSE.DESCRIPTION.asc() : COURSE.DESCRIPTION.desc());
-            }
-            /**
-             * TODO: придумать сортировку по фамилии учителя
-             */
-            if (order.equalsIgnoreCase("teacher")){
-                listSortBy.add(asc ? COURSE.TEACHER_IDD.asc() : COURSE.TEACHER_IDD.desc());
-            }
-            if (order.equalsIgnoreCase("maxCountStudents")){
-                listSortBy.add(asc ? COURSE.MAX_COUNT_STUDENT.asc() : COURSE.MAX_COUNT_STUDENT.desc());
-            }
-            if (order.equalsIgnoreCase("status")){
-                listSortBy.add(asc ? COURSE.STATUS.asc() : COURSE.STATUS.desc());
-            }
-            if (order.equalsIgnoreCase("createDate")){
-                listSortBy.add(asc ? COURSE.CREATE_DATE.asc() : COURSE.CREATE_DATE.desc());
-            }
-        }
-
-        return listSortBy.toArray(new SortField[0]);
+        course.setCreateDate(LocalDateTime.now());
+        super.insert(course);
     }
 }

@@ -11,23 +11,31 @@ import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.student.StudentParams;
 import ru.dfsystems.spring.tutorial.dto.lesson.LessonParams;
-import ru.dfsystems.spring.tutorial.generated.tables.daos.RoomDao;
+import ru.dfsystems.spring.tutorial.generated.Sequences;
 import ru.dfsystems.spring.tutorial.generated.tables.daos.StudentDao;
+import ru.dfsystems.spring.tutorial.generated.tables.daos.StudentDao;
+import ru.dfsystems.spring.tutorial.generated.tables.pojos.Student;
 import ru.dfsystems.spring.tutorial.generated.tables.pojos.Student;
 import ru.dfsystems.spring.tutorial.generated.tables.pojos.Lesson;
 import ru.dfsystems.spring.tutorial.generated.tables.records.StudentRecord;
 import ru.dfsystems.spring.tutorial.generated.tables.records.LessonRecord;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static ru.dfsystems.spring.tutorial.generated.tables.Student.STUDENT;
+import static ru.dfsystems.spring.tutorial.generated.tables.Student.STUDENT;
 import static ru.dfsystems.spring.tutorial.generated.tables.Lesson.LESSON;
 
 @Repository
-@AllArgsConstructor
 public class StudentDaoImpl extends StudentDao {
     private final DSLContext jooq;
+
+    public StudentDaoImpl(DSLContext jooq) {
+        super(jooq.configuration());
+        this.jooq = jooq;
+    }
 
     public Student getActiveByIdd(Integer idd) {
         return jooq.select(STUDENT.fields())
@@ -36,85 +44,18 @@ public class StudentDaoImpl extends StudentDao {
                 .fetchOneInto(Student.class);
     }
 
-    public Page<Student> getStudentsByParams(PageParams<StudentParams> pageParams) {
-        final StudentParams params = pageParams.getParams() == null ? new StudentParams() : pageParams.getParams();
-        val listQuery = getStudentSelect(params);
-
-        val count = jooq.selectCount()
-                .from(listQuery)
-                .fetchOne(0, Long.class);
-
-        List<Student> list = listQuery.offset(pageParams.getStart())
-                .limit(pageParams.getPage())
-                .fetchInto(Student.class);
-
-        return new Page<>(list, count);
-    }
-
-    private SelectSeekStepN<StudentRecord> getStudentSelect(StudentParams params){
-        var condition = STUDENT.DELETE_DATE.isNull();
-        if (!params.getFirstName().isEmpty()){
-            condition = condition.and(STUDENT.FIRST_NAME.like(params.getFirstName()));
-        }
-        if (!params.getMiddleName().isEmpty()){
-            condition = condition.and(STUDENT.MIDDLE_NAME.like(params.getMiddleName()));
-        }
-        if (!params.getLastName().isEmpty()){
-            condition = condition.and(STUDENT.LAST_NAME.like(params.getLastName()));
-        }
-        if (!params.getPassport().isEmpty()){
-            condition = condition.and(STUDENT.PASSPORT.like(params.getPassport()));
-        }
-        if (!params.getStatus().isEmpty()){
-            condition = condition.and(STUDENT.STATUS.like(params.getStatus()));
-        }
-        if (params.getCreateDateStart() != null && params.getCreateDateEnd() != null){
-            condition = condition.and(STUDENT.CREATE_DATE.between(params.getCreateDateStart(), params.getCreateDateEnd()));
-        }
-
-        val sort = getOrderBy(params.getOrderBy(), params.getOrderDir());
-
+    public List<Student> getHistory(Integer idd) {
         return jooq.selectFrom(STUDENT)
-                .where(condition)
-                .orderBy(sort);
+                .where(STUDENT.IDD.eq(idd))
+                .fetchInto(Student.class);
     }
 
-    private SortField[] getOrderBy(String orderBy, String orderDir){
-        val asc = orderDir != null && orderDir.equalsIgnoreCase("asc");
-
-        if (orderBy == null){
-            return asc
-                    ? new SortField[]{STUDENT.IDD.asc()}
-                    : new SortField[]{STUDENT.IDD.desc()};
+    public void create(Student student) {
+        student.setId(jooq.nextval(Sequences.STUDENT_ID_SEQ));
+        if (student.getIdd() == null) {
+            student.setIdd(student.getId());
         }
-
-        val orderArray = orderBy.split(",");
-
-        List<SortField> listSortBy = new ArrayList<>();
-        for (val order: orderArray){
-            if (order.equalsIgnoreCase("idd")){
-                listSortBy.add(asc ? STUDENT.IDD.asc() : STUDENT.IDD.desc());
-            }
-            if (order.equalsIgnoreCase("firstName")){
-                listSortBy.add(asc ? STUDENT.FIRST_NAME.asc() : STUDENT.FIRST_NAME.desc());
-            }
-            if (order.equalsIgnoreCase("middleName")){
-                listSortBy.add(asc ? STUDENT.MIDDLE_NAME.asc() : STUDENT.MIDDLE_NAME.desc());
-            }
-            if (order.equalsIgnoreCase("lastName")){
-                listSortBy.add(asc ? STUDENT.LAST_NAME.asc() : STUDENT.LAST_NAME.desc());
-            }
-            if (order.equalsIgnoreCase("passport")){
-                listSortBy.add(asc ? STUDENT.PASSPORT.asc() : STUDENT.PASSPORT.desc());
-            }
-            if (order.equalsIgnoreCase("status")){
-                listSortBy.add(asc ? STUDENT.STATUS.asc() : STUDENT.STATUS.desc());
-            }
-            if (order.equalsIgnoreCase("createDate")){
-                listSortBy.add(asc ? STUDENT.CREATE_DATE.asc() : STUDENT.CREATE_DATE.desc());
-            }
-        }
-
-        return listSortBy.toArray(new SortField[0]);
+        student.setCreateDate(LocalDateTime.now());
+        super.insert(student);
     }
 }

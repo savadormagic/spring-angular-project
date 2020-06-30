@@ -7,7 +7,6 @@ import ru.dfsystems.spring.tutorial.dto.instrument.InstrumentListDto;
 
 import java.util.List;
 
-
 @Getter
 @Setter
 public class RoomDto extends BaseDto<RoomHistoryDto> {

@@ -1,4 +1,4 @@
-package ru.dfsystems.spring.tutorial.dao;
+package ru.dfsystems.spring.tutorial.dao.ListDao;
 
 import lombok.AllArgsConstructor;
 import lombok.val;
