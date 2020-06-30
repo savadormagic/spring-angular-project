@@ -1,9 +1,8 @@
 package ru.dfsystems.spring.tutorial.mapping;
 
 import lombok.AllArgsConstructor;
-import org.jooq.Converter;
-//import org.modelmapper.Converter;
-//import org.modelmapper.ModelMapper;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import ru.dfsystems.spring.tutorial.dao.InstrumentDaoImpl;
 import ru.dfsystems.spring.tutorial.dao.RoomDaoImpl;
@@ -19,34 +18,34 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class MappingService {
-//    private ModelMapper modelMapper;
-//    private RoomDaoImpl roomDao;
-//    private InstrumentDaoImpl instrumentDao;
-//
-//    @PostConstruct
-//    public void init() {
-//        //Дополнительные настройки.
-//        Converter<Integer, List<RoomHistoryDto>> roomHistory =
-//                context -> mapList(roomDao.getHistory(context.getSource()), RoomHistoryDto.class);
-//        Converter<Integer, List<InstrumentListDto>> instrumentList =
-//                context -> mapList(instrumentDao.getInstrumentsByRoomIdd(context.getSource()), InstrumentListDto.class);
-//
-//        modelMapper.typeMap(Room.class, RoomDto.class)
-//                .addMappings(mapper -> mapper.using(roomHistory).map(Room::getIdd, RoomDto::setHistory))
-//                .addMappings(mapper -> mapper.using(instrumentList).map(Room::getIdd, RoomDto::setInstruments));
-//    }
-//
-//    public <S, D> D map(S source, Class<D> clazz) {
-//        return modelMapper.map(source, clazz);
-//    }
-//
-//    public <S, D> void map(S source, D dest) {
-//        modelMapper.map(source, dest);
-//    }
-//
-//    public <S, D> List<D> mapList(List<S> sources, Class<D> clazz){
-//        return sources.stream()
-//                .map(s -> map(s, clazz))
-//                .collect(Collectors.toList());
-//    }
+    private ModelMapper modelMapper;
+    private RoomDaoImpl roomDao;
+    private InstrumentDaoImpl instrumentDao;
+
+    @PostConstruct
+    public void init() {
+        //Дополнительные настройки.
+        Converter<Integer, List<RoomHistoryDto>> roomHistory =
+                context -> mapList(roomDao.getHistory(context.getSource()), RoomHistoryDto.class);
+        Converter<Integer, List<InstrumentListDto>> instrumentList =
+                context -> mapList(instrumentDao.getInstrumentsByRoomIdd(context.getSource()), InstrumentListDto.class);
+
+        modelMapper.typeMap(Room.class, RoomDto.class)
+                .addMappings(mapper -> mapper.using(roomHistory).map(Room::getIdd, RoomDto::setHistory))
+                .addMappings(mapper -> mapper.using(instrumentList).map(Room::getIdd, RoomDto::setInstruments));
+    }
+
+    public <S, D> D map(S source, Class<D> clazz) {
+        return modelMapper.map(source, clazz);
+    }
+
+    public <S, D> void map(S source, D dest) {
+        modelMapper.map(source, dest);
+    }
+
+    public <S, D> List<D> mapList(List<S> sources, Class<D> clazz) {
+        return sources.stream()
+                .map(s -> map(s, clazz))
+                .collect(Collectors.toList());
+    }
 }
