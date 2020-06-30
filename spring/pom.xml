@@ -109,8 +109,8 @@
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
-                        <username>postgres</username>
-                        <password>Qwerty1</password>
+                        <username>admin</username>
+                        <password>admin</password>
                     </jdbc>
 
                     <generator>
@@ -129,17 +129,9 @@
                         <database>
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
                             <includes>
-                                ROOM |
-                                INSTRUMENT |
-                                INSTRUMENT_TO_ROOM |
-                                COURSE |
-                                LESSON |
-                                LESSON_TO_INSTRUMENT |
-                                STUDENT |
-                                STUDENT_TO_COURSE |
-                                TEACHER |
-                                USER
+                                .*
                             </includes>
+                            <excludes></excludes>
 
                             <schemata>
                                 <schema>
@@ -156,6 +148,7 @@
                         <generate>
                             <pojos>true</pojos>
                             <daos>true</daos>
+                            <sequences>true</sequences>
                             <validationAnnotations>true</validationAnnotations>
                             <springAnnotations>true</springAnnotations>
                             <globalObjectReferences>true</globalObjectReferences>
