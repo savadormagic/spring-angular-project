@@ -20,4 +20,6 @@ public class LessonListDto extends BaseListDto {
     private LocalDateTime createLessonDateStart;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createLessonDateEnd;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime deleteDate;
 }

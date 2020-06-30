@@ -18,5 +18,5 @@ public class TeacherListDto extends BaseListDto {
     private Integer courseIdd;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime createDate;
+    private LocalDateTime deleteDate;
 }

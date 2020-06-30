@@ -177,6 +177,7 @@
             first_name varchar(50),
             middle_name varchar(50),
             last_name varchar(50),
+            status varchar(10),
             course_idd int,
             create_date timestamp(0),
             delete_date timestamp(0)

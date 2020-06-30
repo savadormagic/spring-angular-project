@@ -11,7 +11,4 @@ public class TeacherHistoryDto extends BaseHistoryDto {
     private String middleName;
     private String lastName;
     private String status;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime deleteDate;
 }

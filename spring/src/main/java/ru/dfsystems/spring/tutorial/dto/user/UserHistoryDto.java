@@ -14,9 +14,4 @@ public class UserHistoryDto extends BaseHistoryDto {
     private int courseId;
     private String login;
     private String password;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime createDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime deleteDate;
 }

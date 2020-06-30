@@ -1,6 +1,5 @@
 package ru.dfsystems.spring.tutorial.dao;
 
-import lombok.AllArgsConstructor;
 import lombok.val;
 import lombok.var;
 import org.jooq.DSLContext;
@@ -20,9 +19,13 @@ import java.util.List;
 import static ru.dfsystems.spring.tutorial.generated.tables.Room.ROOM;
 
 @Repository
-@AllArgsConstructor
 public class RoomDaoImpl extends RoomDao {
     private final DSLContext jooq;
+
+    public RoomDaoImpl(DSLContext jooq) {
+        super(jooq.configuration());
+        this.jooq = jooq;
+    }
 
     public Room getActiveByIdd(Integer idd) {
         return jooq.select(ROOM.fields())

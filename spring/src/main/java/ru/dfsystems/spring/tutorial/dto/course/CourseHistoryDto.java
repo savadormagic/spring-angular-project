@@ -11,13 +11,10 @@ public class CourseHistoryDto extends BaseHistoryDto {
     private String description;
     private Integer teacherIdd;
     private Integer maxCountStudent;
-    private String passport;
     private String status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createDateStart;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createDateEnd;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime createDate;
 }
