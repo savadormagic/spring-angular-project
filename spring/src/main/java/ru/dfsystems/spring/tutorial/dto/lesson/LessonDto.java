@@ -1,4 +1,4 @@
-package ru.dfsystems.spring.tutorial.dto.Lesson;
+package ru.dfsystems.spring.tutorial.dto.lesson;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +23,5 @@ public class LessonDto extends BaseDto<LessonHistoryDto> {
     private RoomDto room;
 
     private List<InstrumentListDto> instrument;
+    private List<LessonListDto> lessons;
 }

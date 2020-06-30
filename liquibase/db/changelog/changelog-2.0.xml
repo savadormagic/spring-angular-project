@@ -67,35 +67,6 @@
         </rollback>
     </changeSet>
 
-    <!--    Создание таблицы USER-->
-    <!--    <changeSet id="30200620-03" author="KusakinFS">-->
-    <!--        <preConditions onFail="MARK_RAN">-->
-    <!--            <not>-->
-    <!--                <tableExists tableName="USERS" schemaName="public"/>-->
-    <!--            </not>-->
-    <!--        </preConditions>-->
-    <!--        <comment>Lesson 2. Liquibase. Создание таблицы USERS</comment>-->
-    <!--        <sql>-->
-    <!--            create table USERS (-->
-    <!--            id serial primary key,-->
-    <!--            idd int not null,-->
-    <!--            first_name varchar(50),-->
-    <!--            middle_name varchar(50),-->
-    <!--            last_name varchar(50),-->
-    <!--            passport varchar(15),-->
-    <!--            birth_date timestamp(0),-->
-    <!--            create_date timestamp(0) not null,-->
-    <!--            delete_date timestamp(0),-->
-    <!--            status varchar(10)-->
-    <!--            );-->
-    <!--        </sql>-->
-    <!--        <rollback>-->
-    <!--            <sql>-->
-    <!--                drop table USERS;-->
-    <!--            </sql>-->
-    <!--        </rollback>-->
-    <!--    </changeSet>-->
-
     <!--    Создание таблицы COURSE-->
     <changeSet id="30200620-04" author="KusakinFS">
         <preConditions onFail="MARK_RAN">
@@ -201,16 +172,16 @@
         </rollback>
     </changeSet>
 
-    <!--    Создание таблицы LESSON_TO_INSTRUMENT-->
+    <!--    Создание таблицы INSTRUMENT_TO_LESSON-->
     <changeSet id="30200620-08" author="KusakinFS">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+                <tableExists tableName="INSTRUMENT_TO_LESSON" schemaName="public"/>
             </not>
         </preConditions>
-        <comment>Lesson 2. Liquibase. Создание таблицы LESSON_TO_INSTRUMENT</comment>
+        <comment>Lesson 2. Liquibase. Создание таблицы INSTRUMENT_TO_LESSON</comment>
         <sql>
-            create table LESSON_TO_INSTRUMENT (
+            create table INSTRUMENT_TO_LESSON (
             id serial primary key,
             lesson_id int,
             instrument_idd int
@@ -218,7 +189,7 @@
         </sql>
         <rollback>
             <sql>
-                drop table LESSON_TO_INSTRUMENT;
+                drop table INSTRUMENT_TO_LESSON;
             </sql>
         </rollback>
     </changeSet>
@@ -260,4 +231,33 @@
             </sql>
         </rollback>
     </changeSet>
+
+    <!--    Создание таблицы USER-->
+    <!--    <changeSet id="30200620-03" author="KusakinFS">-->
+    <!--        <preConditions onFail="MARK_RAN">-->
+    <!--            <not>-->
+    <!--                <tableExists tableName="USERS" schemaName="public"/>-->
+    <!--            </not>-->
+    <!--        </preConditions>-->
+    <!--        <comment>Lesson 2. Liquibase. Создание таблицы USERS</comment>-->
+    <!--        <sql>-->
+    <!--            create table USERS (-->
+    <!--            id serial primary key,-->
+    <!--            idd int not null,-->
+    <!--            first_name varchar(50),-->
+    <!--            middle_name varchar(50),-->
+    <!--            last_name varchar(50),-->
+    <!--            passport varchar(15),-->
+    <!--            birth_date timestamp(0),-->
+    <!--            create_date timestamp(0) not null,-->
+    <!--            delete_date timestamp(0),-->
+    <!--            status varchar(10)-->
+    <!--            );-->
+    <!--        </sql>-->
+    <!--        <rollback>-->
+    <!--            <sql>-->
+    <!--                drop table USERS;-->
+    <!--            </sql>-->
+    <!--        </rollback>-->
+    <!--    </changeSet>-->
 </databaseChangeLog>
