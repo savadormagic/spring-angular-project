@@ -8,8 +8,8 @@ import org.jooq.SortField;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.instrument.InstrumentParams;
-import ru.dfsystems.spring.tutorial.generated.tables.pojos.Instrument;
 import ru.dfsystems.spring.tutorial.generated.tables.daos.InstrumentDao;
+import ru.dfsystems.spring.tutorial.generated.tables.pojos.Instrument;
 import ru.dfsystems.spring.tutorial.generated.tables.records.InstrumentRecord;
 
 import java.util.ArrayList;
@@ -91,5 +91,15 @@ public class InstrumentDaoImpl extends InstrumentDao {
         }
 
         return listSortBy.toArray(new SortField[0]);
+    }
+
+    public List<Instrument> getInstrumentsByRoomIdd(Integer idd) {
+//        return jooq.select(INSTRUMENT.fields())
+//                    .from(INSTRUMENT)
+//                        .join(INSTRUMENT_TO_ROOM)
+//                            .on(INSTRUMENT.IDD.eq(INSTRUMENT_TO_ROOM.INSTRUMENT_IDD))
+//                    .where(INSTRUMENT_TO_ROOM.ROOM_IDD.eq(idd))
+//                    .fetchInto(Instrument.class);
+        return null;
     }
 }

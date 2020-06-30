@@ -190,4 +190,61 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="20200701-07" author="grigoriev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON_TO_INSTRUMENT"/>
+            </not>
+        </preConditions>
+        <comment>Liquibase Создание таблицы LESSON_TO_INSTRUMENT</comment>
+        <sql>
+            create table LESSON_TO_INSTRUMENT (
+            id serial primary key,
+            lesson_idd int,
+            instrument_idd int
+            );
+        </sql>
+        <rollback>
+            drop table LESSON_TO_INSTRUMENT;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200701-07" author="grigoriev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON_TO_INSTRUMENT"/>
+            </not>
+        </preConditions>
+        <comment>Liquibase Создание таблицы ROOM_TO_INSTRUMENT</comment>
+        <sql>
+            create table LESSON_TO_INSTRUMENT (
+            id serial primary key,
+            room_idd int,
+            instrument_idd int
+            );
+        </sql>
+        <rollback>
+            drop table ROOM_TO_INSTRUMENT;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200701-09" author="grigoriev">
+    <preConditions onFail="MARK_RAN">
+        <not>
+            <tableExists tableName="STUDENT_TO_COURSE" schemaName="public"/>
+        </not>
+    </preConditions>
+    <sql>
+        create table STUDENT_TO_COURSE (
+        id serial primary key,
+        student_idd int,
+        course_idd int,
+        success boolean
+        );
+    </sql>
+    <rollback>
+        drop table STUDENT_TO_COURSE;
+    </rollback>
+</changeSet>
+
 </databaseChangeLog>

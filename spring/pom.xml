@@ -130,16 +130,18 @@
                         <database>
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
                             <includes>
-                                INSTRUMENT |
-                                ROOM |
-                                INSTRUMENT_TO_ROOM |
-                                STUDENT |
-                                COURSE |
-                                STUDENT_TO_COURSE |
-                                LESSON |
-                                USER |
-                                TEACHER
+<!--                                INSTRUMENT |-->
+<!--                                ROOM |-->
+<!--                                INSTRUMENT_TO_ROOM |-->
+<!--                                STUDENT |-->
+<!--                                COURSE |-->
+<!--                                STUDENT_TO_COURSE |-->
+<!--                                LESSON |-->
+<!--                                USER |-->
+<!--                                TEACHER-->
+                                .*
                             </includes>
+                            <excludes></excludes>
 
                             <schemata>
                                 <schema>
@@ -156,6 +158,7 @@
                         <generate>
                             <pojos>true</pojos>
                             <daos>true</daos>
+                            <sequences>true</sequences>
                             <validationAnnotations>true</validationAnnotations>
                             <springAnnotations>true</springAnnotations>
                             <globalObjectReferences>true</globalObjectReferences>
