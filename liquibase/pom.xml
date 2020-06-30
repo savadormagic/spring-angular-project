@@ -22,11 +22,11 @@
 
     <profiles>
         <profile>
-            <id>polovnikov</id>
+            <id>ivonin</id>
             <properties>
-                <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
-                <username>admin</username>
-                <password>admin</password>
+                <url>jdbc:postgresql://127.0.0.1:5432/dz</url>
+                <username>postgres</username>
+                <password>5933</password>
             </properties>
         </profile>
     </profiles>
