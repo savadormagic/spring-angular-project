@@ -27,6 +27,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
             <exclusions>
+                <!--Исключили jooq из библиотеки, чтобы использовать свою версию-->
                 <exclusion>
                     <groupId>org.jooq</groupId>
                     <artifactId>jooq</artifactId>
@@ -63,7 +64,7 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
         </dependency>
-
+        <!--Зависимость модуля liquibase, чтобы он собрался до модуля spring и сгенерировал таблицы-->
         <dependency>
             <groupId>ru.dfsystems</groupId>
             <artifactId>liquibase</artifactId>
@@ -99,8 +100,8 @@
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
-                        <username>admin</username>
-                        <password>admin</password>
+                        <username>postgres</username>
+                        <password>password</password>
                     </jdbc>
 
                     <generator>

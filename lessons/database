@@ -10,8 +10,33 @@ Student(
     delete_date timestamp,
     status varchar(10)
 )
-Teacher()
-User()
+
+Teacher(
+    id serial primary key,
+    idd int not null,
+    first_name varchar(50),
+    middle_name varchar(50),
+    last_name varchar(50),
+    passport varchar(15),
+    birth_date timestamp(0),
+    create_date timestamp(0) not null,
+    delete_date timestamp(0),
+    status varchar(10)
+)
+
+USER (
+    id serial primary key,
+    idd int not null,
+    first_name varchar(50),
+    middle_name varchar(50),
+    last_name varchar(50),
+    passport varchar(15),
+    birth_date timestamp(0),
+    create_date timestamp(0) not null,
+    delete_date timestamp(0),
+    status varchar(10)
+    )
+
 Course(
     id serial,
     idd int,
@@ -41,6 +66,7 @@ Room(
     create_date timestamp,
     delete_date timestamp
 )
+
 Lesson(
     id serial,
     name varchar(100),
@@ -52,10 +78,19 @@ Lesson(
     extra_instruments varchar(1000) //PRINTER,SENSOR_BOARD,...
 )
 
-Lesson_to_Instruments()
-Room_to_Instruments()
+INSTRUMENT_TO_LESSON (
+    id serial primary key,
+    instrument_idd int references INSTRUMENT (idd),
+    lesson_idd int references LESSON (idd)
+)
 
-Instruments(
+INSTRUMENT_TO_ROOM (
+    id serial primary key,
+    instrument_idd int references INSTRUMENT (idd),
+    room_idd int references ROOM (idd)
+)
+
+Instrument(
     id serial
     idd int,
     name varchar(50),

@@ -22,11 +22,11 @@
 
     <profiles>
         <profile>
-            <id>polovnikov</id>
+            <id>magidin</id>
             <properties>
                 <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
-                <username>admin</username>
-                <password>admin</password>
+                <username>postgres</username>
+                <password>password</password>
             </properties>
         </profile>
     </profiles>
@@ -44,7 +44,7 @@
                     <url>${url}</url>
                     <username>${username}</username>
                     <password>${password}</password>
-<!--                    <rollbackCount>2</rollbackCount>-->
+<!--                    <rollbackCount>1</rollbackCount>-->
 <!--                    <rollbackDate>2020-06-20</rollbackDate>-->
 <!--                    <rollbackTag>changelog-2.0</rollbackTag>-->
                 </configuration>
