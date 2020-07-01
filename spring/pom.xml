@@ -109,7 +109,7 @@
                 <configuration>
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
+                        <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db2</url>
                         <username>admin</username>
                         <password>admin</password>
                     </jdbc>
@@ -141,7 +141,9 @@
                                 LESSON |
                                 LESSON_TO_INSTRUMENT |
                                 ROOM_ID_SEQ |
-                                INSTRUMENT_ID_SEQ
+                                INSTRUMENT_ID_SEQ |
+                                STUDENT_ID_SEQ |
+                                COURSE_ID_SEQ
                             </includes>
 
                             <schemata>
