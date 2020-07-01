@@ -109,8 +109,8 @@
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql://127.0.0.1:5432/spring-angular-db</url>
-                        <username>postgres</username>
-                        <password>Qwerty1</password>
+                        <username>admin</username>
+                        <password>admin</password>
                     </jdbc>
 
                     <generator>
@@ -131,7 +131,7 @@
                             <includes>
                                 .*
                             </includes>
-                            <excludes/>
+                            <excludes></excludes>
 
                             <schemata>
                                 <schema>
