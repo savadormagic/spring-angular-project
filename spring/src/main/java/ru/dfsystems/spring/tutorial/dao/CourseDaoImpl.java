@@ -41,13 +41,13 @@ public class CourseDaoImpl extends CourseDao {
 
     private SelectSeekStepN<CourseRecord> getCourseSelect(CourseParams params){
         var condition = COURSE.DELETE_DATE.isNull();
-        if (!params.getName().isEmpty()){
+        if (params.getName() != null){
             condition = condition.and(COURSE.NAME.like(params.getName()));
         }
         if (params.getMaxCountStudent() != null){
             condition = condition.and(COURSE.MAX_COUNT_STUDENT.equal(params.getMaxCountStudent()));
         }
-        if (!params.getStatus().isEmpty()){
+        if (params.getStatus() != null){
             condition = condition.and(COURSE.STATUS.like(params.getStatus()));
         }
 
