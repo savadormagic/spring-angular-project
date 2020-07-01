@@ -12,7 +12,7 @@ import java.util.List;
 import static ru.dfsystems.spring.tutorial.generated.tables.Room.ROOM;
 
 @Repository
-public class RoomDaoImpl extends RoomDao {
+public class RoomDaoImpl extends RoomDao implements BaseDao<Room> {
     private final DSLContext jooq;
 
     public RoomDaoImpl(DSLContext jooq) {

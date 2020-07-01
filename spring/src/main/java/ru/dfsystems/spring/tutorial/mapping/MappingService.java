@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class MappingService {
+public class MappingService implements BaseMapping {
     private ModelMapper modelMapper;
     private RoomDaoImpl roomDao;
     private InstrumentDaoImpl instrumentDao;
 
     @PostConstruct
     public void init() {
-        // Дополнительные настройки.
+        //Дополнительные настройки.
         Converter<Integer, List<RoomHistoryDto>> roomHistory =
                 context -> mapList(roomDao.getHistory(context.getSource()), RoomHistoryDto.class);
         Converter<Integer, List<InstrumentListDto>> instrumentList =
