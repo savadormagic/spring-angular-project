@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200627-01" author="chupin">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="LESSON_TO_INSTRUMENT">
+            <column name="ID" type="serial">
+                <constraints  primaryKey="true" nullable="false"/>
+            </column>
+            <column name="LESSON_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INSTRUMENT_IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="LESSON_TO_INSTRUMENT" schemaName="public"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

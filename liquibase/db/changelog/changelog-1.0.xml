@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
+
+    <changeSet id="20200627-01" author="chupin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="INSTRUMENT" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="INSTRUMENT">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints  primaryKey="true" nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(50)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="INSTRUMENT" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200627-02" author="chupin">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="INSTRUMENT" schemaName="public"/>
+                <not>
+                    <columnExists tableName="INSTRUMENT" columnName="IDD"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Lesson 2. Add column to instrument</comment>
+        <addColumn tableName="INSTRUMENT">
+            <column name="IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="INSTRUMENT" columnName="IDD"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200627-03" author="chupin">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="INSTRUMENT" schemaName="public"/>
+                <not>
+                    <columnExists tableName="INSTRUMENT" columnName="NUMBER"/>
+                </not>
+                <not>
+                    <columnExists tableName="INSTRUMENT" columnName="CREATE_DATE"/>
+                </not>
+                <not>
+                    <columnExists tableName="INSTRUMENT" columnName="DELETE_DATE"/>
+                </not>
+                <not>
+                    <columnExists tableName="INSTRUMENT" columnName="TO_BE_DELETED"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Lesson 2. Liquibase. Add columns to instrument</comment>
+        <addColumn tableName="INSTRUMENT">
+            <column name="NUMBER" type="varchar(50)"/>
+            <column name="CREATE_DATE" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DELETE_DATE" type="timestamp(0)"/>
+            <column name="TO_BE_DELETED" type="boolean"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="INSTRUMENT" columnName="NUMBER"/>
+            <dropColumn tableName="INSTRUMENT" columnName="CREATE_DATE"/>
+            <dropColumn tableName="INSTRUMENT" columnName="DELETE_DATE"/>
+            <dropColumn tableName="INSTRUMENT" columnName="TO_BE_DELETED"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200627-04" author="chupin">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="INSTRUMENT" schemaName="public"/>
+                <columnExists tableName="INSTRUMENT" columnName="TO_BE_DELETED"/>
+            </and>
+        </preConditions>
+        <dropColumn tableName="INSTRUMENT" columnName="TO_BE_DELETED"/>
+        <rollback>
+            <addColumn tableName="INSTRUMENT">
+                <column name="TO_BE_DELETED" type="boolean"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200627-05" author="chupin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ROOM" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Lesson 2. Create Room</comment>
+        <sql>
+            create table ROOM (
+            id serial primary key,
+            idd int not null,
+            number varchar(5),
+            block varchar(6),
+            create_date timestamp(0) not null,
+            delete_date timestamp(0) not null
+            );
+        </sql>
+        <rollback>
+            <sql>
+                drop table ROOM;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200627-07" author="chupin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="INSTRUMENT_TO_ROOM" schemaName="public"/>
+            </not>
+        </preConditions>
+        <sqlFile path="sql/instrument_to_room.sql"  relativeToChangelogFile="true"/>
+        <rollback>
+            <sqlFile path="instrument_to_room_rollback.sql"  relativeToChangelogFile="true"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
