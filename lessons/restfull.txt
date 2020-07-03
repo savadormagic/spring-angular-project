@@ -8,11 +8,10 @@ http://localhost/api
 /{idd} - @DELETE Помечение объекта удаленным
 /{idd}/instrument - @PUT Добавление нового инструмента в комнату
 
-/instrument //CRUD
 
 /student //CRUD
 /{idd}/course/list - @GET Список курсов у студента
-/{idd}/course      - @PUT Запись сутдента на новый курс
+/{idd}/course      - @PUT Запись сутдента на новый  курс
 /{idd}/history - @GET История изменения студента
 
 /teacher //CRUD

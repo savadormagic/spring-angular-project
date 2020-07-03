@@ -1,10 +1,12 @@
 package ru.dfsystems.spring.origin.dao;
 
+import lombok.AllArgsConstructor;
 import lombok.val;
 import lombok.var;
 import org.jooq.DSLContext;
 import org.jooq.SelectSeekStepN;
 import org.jooq.SortField;
+import org.springframework.stereotype.Repository;
 import ru.dfsystems.spring.origin.dto.Page;
 import ru.dfsystems.spring.origin.dto.PageParams;
 import ru.dfsystems.spring.origin.dto.teacher.TeacherParams;
@@ -17,13 +19,10 @@ import java.util.List;
 
 import static ru.dfsystems.spring.origin.generated.tables.Teacher.TEACHER;
 
+@Repository
+@AllArgsConstructor
 public class TeacherDaoImpl extends TeacherDao {
     private final DSLContext jooq;
-
-    public TeacherDaoImpl(DSLContext jooq) {
-        super(jooq.configuration());
-        this.jooq = jooq;
-    }
 
     public Teacher getActiveByIdd(Integer idd) {
         return jooq.select(TEACHER.fields())

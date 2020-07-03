@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CourseController {
     private CourseService courseService;
-    private ModelMapper mapper = new ModelMapper();
 
     @PostMapping("/course")
     public Page<BaseListDto> getList(PageParams<CourseParams> pageParams) {
@@ -30,6 +29,7 @@ public class CourseController {
     }
 
     private List<BaseListDto> mapper(List<Course> allCourses) {
+        ModelMapper mapper = new ModelMapper();
         return allCourses.stream()
                 .map(r -> mapper.map(r, BaseListDto.class))
                 .collect(Collectors.toList());

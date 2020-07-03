@@ -22,13 +22,9 @@ import static ru.dfsystems.spring.origin.generated.tables.Room.ROOM;
 import static ru.dfsystems.spring.origin.generated.tables.Users.USERS;
 
 @Repository
+@AllArgsConstructor
 public class UserDaoImpl extends UsersDao {
     private final DSLContext jooq;
-
-    public UserDaoImpl(DSLContext jooq) {
-        super(jooq.configuration());
-        this.jooq = jooq;
-    }
 
     public Users getActiveByIdd(Integer idd) {
         return jooq.select(USERS.fields())

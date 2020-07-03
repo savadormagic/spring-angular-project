@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class InstrumentController {
     private InstrumentService instrumentService;
-    private ModelMapper mapper = new ModelMapper();
+
 
     @PostMapping("/instrument")
     public Page<BaseListDto> getList(PageParams<InstrumentParams> pageParams){
@@ -30,6 +30,7 @@ public class InstrumentController {
     }
 
     private List<BaseListDto> mapper(List<Instrument> allInstruments) {
+        ModelMapper mapper = new ModelMapper();
         return allInstruments.stream()
                 .map(r -> mapper.map(r, BaseListDto.class))
                 .collect(Collectors.toList());

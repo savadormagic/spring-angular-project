@@ -147,6 +147,7 @@
                         <generate>
                             <pojos>true</pojos>
                             <daos>true</daos>
+                            <sequences>true</sequences>
                             <validationAnnotations>true</validationAnnotations>
                             <springAnnotations>true</springAnnotations>
                             <globalObjectReferences>true</globalObjectReferences>

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import ru.dfsystems.spring.origin.dto.Page;
 import ru.dfsystems.spring.origin.dto.PageParams;
 import ru.dfsystems.spring.origin.dto.room.RoomParams;
-import ru.dfsystems.spring.origin.generated.tables.daos.RoomDao;
 import ru.dfsystems.spring.origin.generated.tables.pojos.Room;
 import ru.dfsystems.spring.origin.generated.tables.records.RoomRecord;
 
@@ -21,7 +20,7 @@ import static ru.dfsystems.spring.origin.generated.tables.Room.ROOM;
 
 @Repository
 @AllArgsConstructor
-public class RoomDaoImpl extends RoomDao {
+public class RoomDaoImpl {
     private final DSLContext jooq;
 
     public Room getActiveByIdd(Integer idd) {
@@ -48,10 +47,10 @@ public class RoomDaoImpl extends RoomDao {
 
     private SelectSeekStepN<RoomRecord> getRoomSelect(RoomParams params){
         var condition = ROOM.DELETE_DATE.isNull();
-        if (!params.getBlock().isEmpty()){
+        if (params.getBlock() != null){
             condition = condition.and(ROOM.BLOCK.like(params.getBlock()));
         }
-        if (!params.getNumber().isEmpty()){
+        if (params.getNumber() != null){
             condition = condition.and(ROOM.NUMBER.like(params.getNumber()));
         }
         if (params.getCreateDateStart() != null && params.getCreateDateEnd() != null){
@@ -93,5 +92,11 @@ public class RoomDaoImpl extends RoomDao {
         }
 
         return listSortBy.toArray(new SortField[0]);
+    }
+
+    public List<Room> getHistory(Integer idd) {
+        return jooq.selectFrom(ROOM)
+                .where(ROOM.IDD.eq(idd))
+                .fetchInto(Room.class);
     }
 }

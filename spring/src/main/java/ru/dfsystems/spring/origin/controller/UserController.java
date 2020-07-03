@@ -19,9 +19,8 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/users", produces = "application/json; charset=UTF-8")
 @AllArgsConstructor
 public class UserController {
-
     private UserService userService;
-    private ModelMapper mapper = new ModelMapper();
+
 
     @PostMapping("/list")
     public Page<BaseListDto> getList(PageParams<UserParams> pageParams) {
@@ -31,6 +30,7 @@ public class UserController {
     }
 
     private List<BaseListDto> mapper(List<Users> allStudents) {
+        ModelMapper mapper = new ModelMapper();
         return allStudents.stream()
                 .map(r -> mapper.map(r, BaseListDto.class))
                 .collect(Collectors.toList());
