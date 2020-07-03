@@ -1,8 +1,6 @@
 package ru.dfsystems.spring.tutorial.dao;
 
-import lombok.AllArgsConstructor;
 import lombok.val;
-import lombok.var;
 import org.jooq.*;
 import org.springframework.stereotype.Repository;
 import ru.dfsystems.spring.tutorial.dto.course.CourseParams;
@@ -47,7 +45,7 @@ public class CourseDaoImpl extends CourseDao {
 
     private SelectSeekStepN<CourseRecord> getCourseSelect(PageParams<CourseParams> pageParams) {
         final CourseParams params = pageParams.getParams() == null ? new CourseParams() : pageParams.getParams();
-        var condition = COURSE.DELETE_DATE.isNull();
+        Condition condition = COURSE.DELETE_DATE.isNull();
         String name = params.getName();
         String status = params.getStatus();
         if (Checker.checkEmpty(name)) {

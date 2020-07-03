@@ -1,11 +1,7 @@
 package ru.dfsystems.spring.tutorial.dao;
 
 import lombok.val;
-import lombok.var;
-import org.jooq.DSLContext;
-import org.jooq.SelectSeekStepN;
-import org.jooq.TableField;
-import org.jooq.TableRecord;
+import org.jooq.*;
 import org.springframework.stereotype.Repository;
 import ru.dfsystems.spring.tutorial.generated.Sequences;
 import ru.dfsystems.spring.tutorial.tools.SQLer;
@@ -59,7 +55,7 @@ public class InstrumentDaoImpl extends InstrumentDao {
 
     private SelectSeekStepN<InstrumentRecord> getInstrumentSelect(PageParams<InstrumentParams> pageParams){
         final InstrumentParams params = pageParams.getParams() == null ? new InstrumentParams() : pageParams.getParams();
-        var condition = INSTRUMENT.DELETE_DATE.isNull();
+        Condition condition = INSTRUMENT.DELETE_DATE.isNull();
         if (!params.getNumber().isEmpty()){
             condition = condition.and(INSTRUMENT.NUMBER.like(params.getNumber()));
         }

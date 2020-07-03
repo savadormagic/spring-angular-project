@@ -1,7 +1,6 @@
 package ru.dfsystems.spring.tutorial.dao;
 
 import lombok.val;
-import lombok.var;
 import org.jooq.*;
 import org.springframework.stereotype.Repository;
 import ru.dfsystems.spring.tutorial.dto.teacher.TeacherParams;
@@ -46,7 +45,7 @@ public class TeacherDaoImpl extends TeacherDao {
 
     private SelectSeekStepN<TeacherRecord> getTeacherSelect(PageParams<TeacherParams> pageParams) {
         final TeacherParams params = pageParams.getParams() == null ? new TeacherParams() : pageParams.getParams();
-        var condition = TEACHER.DELETE_DATE.isNull();
+        Condition condition = TEACHER.DELETE_DATE.isNull();
         String firstName = params.getFirstName();
         String lastName = params.getLastName();
         String middleName = params.getMiddleName();
