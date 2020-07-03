@@ -20,6 +20,7 @@ public class RoomDaoImpl extends RoomDao implements BaseDao<Room> {
         this.jooq = jooq;
     }
 
+    @Override
     public Room getActiveByIdd(Integer idd) {
         return jooq.select(ROOM.fields())
                 .from(ROOM)
@@ -33,6 +34,7 @@ public class RoomDaoImpl extends RoomDao implements BaseDao<Room> {
                     .fetchInto(Room.class);
     }
 
+    @Override
     public void create(Room room) {
         room.setId(jooq.nextval(Sequences.ROOM_ID_SEQ));
         if (room.getIdd() == null) {

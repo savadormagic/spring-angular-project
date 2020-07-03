@@ -21,7 +21,7 @@ import java.util.Map;
 import static ru.dfsystems.spring.tutorial.generated.tables.Student.STUDENT;
 
 @Repository
-public class StudentDaoImpl extends StudentDao {
+public class StudentDaoImpl extends StudentDao  implements  BaseDao<Student>,BaseListDao<Student, StudentParams> {
     private final DSLContext jooq;
 
     public StudentDaoImpl(Configuration configuration, DSLContext jooq) {
@@ -29,7 +29,8 @@ public class StudentDaoImpl extends StudentDao {
         this.jooq = jooq;
     }
 
-    public Page<Student> getStudentList(PageParams<StudentParams> pageParams) {
+    @Override
+    public Page<Student> list(PageParams<StudentParams> pageParams) {
         val listQuery = getStudentSelect(pageParams);
 
         val count = jooq.selectCount()
@@ -71,6 +72,7 @@ public class StudentDaoImpl extends StudentDao {
                 .orderBy(sort);
     }
 
+    @Override
     public Student getActiveByIdd(Integer idd) {
         return jooq.select(STUDENT.fields())
                 .from(STUDENT)
@@ -78,6 +80,7 @@ public class StudentDaoImpl extends StudentDao {
                 .fetchOneInto(Student.class);
     }
 
+    @Override
     public void create(Student student) {
         student.setId(jooq.nextval(Sequences.STUDENT_ID_SEQ));
         if (student.getIdd() == null) {

@@ -1,6 +1,7 @@
 package ru.dfsystems.spring.tutorial.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.dfsystems.spring.tutorial.dao.CourseDaoImpl;
@@ -17,45 +18,10 @@ import java.util.List;
 
 
 @Service
-@AllArgsConstructor
-public class CourseService {
-    private CourseDaoImpl courseDao;
-    private MappingService mappingService;
+public class CourseService  extends BaseService<CourseDto, CourseDto, CourseParams, Course>{
 
-    public Page<BaseListDto> getCourseList(PageParams<CourseParams> pageParams) {
-        Page<Course> page = courseDao.getCourseList(pageParams);
-        List<BaseListDto> courseList = mappingService.mapList(page.getList(),BaseListDto.class);
-        return new Page<>(courseList,page.getTotalCount());
-    }
-
-    @Transactional
-    public void create(CourseDto courseDto) {
-        courseDao.create(mappingService.map(courseDto, Course.class));
-    }
-
-    public CourseDto get(Integer idd) {
-        return mappingService.map(courseDao.getActiveByIdd(idd), CourseDto.class);
-    }
-
-    @Transactional
-    public CourseDto update(Integer idd, CourseDto courseDto) {
-        Course course = courseDao.getActiveByIdd(idd);
-        if (course == null){
-            throw new RuntimeException("");
-        }
-        course.setDeleteDate(LocalDateTime.now());
-        courseDao.update(course);
-
-        Course newCourse = mappingService.map(courseDto, Course.class);
-        newCourse.setIdd(course.getIdd());
-        courseDao.create(newCourse);
-        return mappingService.map(newCourse, CourseDto.class);
-    }
-
-    @Transactional
-    public void delete(Integer idd) {
-        Course course = courseDao.getActiveByIdd(idd);
-        course.setDeleteDate(LocalDateTime.now());
-        courseDao.update(course);
+    @Autowired
+    public CourseService(CourseDaoImpl courseListDao, CourseDaoImpl courseDao, MappingService mappingService) {
+        super(mappingService, courseListDao, courseDao, CourseDto.class, CourseDto.class, Course.class);
     }
 }

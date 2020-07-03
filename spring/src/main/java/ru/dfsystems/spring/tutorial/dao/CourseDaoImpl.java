@@ -21,7 +21,7 @@ import java.util.Map;
 import static ru.dfsystems.spring.tutorial.generated.tables.Course.COURSE;
 
 @Repository
-public class CourseDaoImpl extends CourseDao {
+public class CourseDaoImpl extends CourseDao  implements BaseDao<Course>, BaseListDao<Course, CourseParams> {
     private final DSLContext jooq;
 
     public CourseDaoImpl(Configuration configuration, DSLContext jooq) {
@@ -29,7 +29,8 @@ public class CourseDaoImpl extends CourseDao {
         this.jooq = jooq;
     }
 
-    public Page<Course> getCourseList(PageParams<CourseParams> pageParams) {
+    @Override
+    public Page<Course> list(PageParams<CourseParams> pageParams) {
         val listQuery = getCourseSelect(pageParams);
 
         val count = jooq.selectCount()
@@ -66,6 +67,7 @@ public class CourseDaoImpl extends CourseDao {
                 .orderBy(sort);
     }
 
+    @Override
     public Course getActiveByIdd(Integer idd) {
         return jooq.select(COURSE.fields())
                 .from(COURSE)
@@ -73,6 +75,7 @@ public class CourseDaoImpl extends CourseDao {
                 .fetchOneInto(Course.class);
     }
 
+    @Override
     public void create(Course course) {
         course.setId(jooq.nextval(Sequences.COURSE_ID_SEQ));
         if (course.getIdd() == null) {

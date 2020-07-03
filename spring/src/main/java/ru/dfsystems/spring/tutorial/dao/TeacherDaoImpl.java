@@ -21,7 +21,8 @@ import java.util.Map;
 import static ru.dfsystems.spring.tutorial.generated.tables.Teacher.TEACHER;
 
 @Repository
-public class TeacherDaoImpl extends TeacherDao {
+public class TeacherDaoImpl extends TeacherDao  implements BaseDao<Teacher>, BaseListDao<Teacher, TeacherParams>
+{
     private final DSLContext jooq;
 
     public TeacherDaoImpl(Configuration configuration, DSLContext jooq) {
@@ -29,7 +30,8 @@ public class TeacherDaoImpl extends TeacherDao {
         this.jooq = jooq;
     }
 
-    public Page<Teacher> getTeacherList(PageParams<TeacherParams> pageParams) {
+    @Override
+    public Page<Teacher> list(PageParams<TeacherParams> pageParams) {
         val listQuery = getTeacherSelect(pageParams);
 
         val count = jooq.selectCount()
@@ -71,6 +73,7 @@ public class TeacherDaoImpl extends TeacherDao {
                 .orderBy(sort);
     }
 
+    @Override
     public Teacher getActiveByIdd(Integer idd) {
         return jooq.select(TEACHER.fields())
                 .from(TEACHER)
@@ -78,6 +81,7 @@ public class TeacherDaoImpl extends TeacherDao {
                 .fetchOneInto(Teacher.class);
     }
 
+    @Override
     public void create(Teacher teacher) {
         teacher.setId(jooq.nextval(Sequences.TEACHER_ID_SEQ));
         if (teacher.getIdd() == null) {

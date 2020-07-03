@@ -21,12 +21,17 @@ import static ru.dfsystems.spring.tutorial.generated.tables.Instrument.INSTRUMEN
 import static ru.dfsystems.spring.tutorial.generated.tables.InstrumentToRoom.INSTRUMENT_TO_ROOM;
 
 @Repository
-public class InstrumentDaoImpl extends InstrumentDao {
+public class InstrumentDaoImpl extends InstrumentDao  implements BaseDao<Instrument>, BaseListDao<Instrument, InstrumentParams> {
     final DSLContext jooq;
 
     public InstrumentDaoImpl(DSLContext jooq) {
         super(jooq.configuration());
         this.jooq = jooq;
+    }
+
+    @Override
+    public Page<Instrument> list(PageParams<InstrumentParams> pageParams) {
+        return null;
     }
 
     public List<Instrument> getInstrumentsByRoomIdd(Integer idd) {
@@ -74,6 +79,7 @@ public class InstrumentDaoImpl extends InstrumentDao {
                 .orderBy(sort);
     }
 
+    @Override
     public Instrument getActiveByIdd(Integer idd) {
         return jooq.select(INSTRUMENT.fields())
                 .from(INSTRUMENT)
@@ -81,6 +87,7 @@ public class InstrumentDaoImpl extends InstrumentDao {
                 .fetchOneInto(Instrument.class);
     }
 
+    @Override
     public void create(Instrument instrument) {
         instrument.setId(jooq.nextval(Sequences.LESSON_ID_SEQ));
         if (instrument.getIdd() == null) {

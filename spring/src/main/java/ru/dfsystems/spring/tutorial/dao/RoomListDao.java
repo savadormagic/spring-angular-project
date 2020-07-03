@@ -22,6 +22,7 @@ import static ru.dfsystems.spring.tutorial.generated.tables.Room.ROOM;
 public class RoomListDao implements BaseListDao<Room, RoomParams> {
     private final DSLContext jooq;
 
+    @Override
     public Page<Room> list(PageParams<RoomParams> pageParams) {
         final RoomParams params = pageParams.getParams() == null ? new RoomParams() : pageParams.getParams();
         val listQuery = getRoomSelect(params);
