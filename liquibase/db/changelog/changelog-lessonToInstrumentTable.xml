@@ -5,6 +5,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
+    <changeSet id="20200702-02" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="LESSON_TO_INSTRUMENT_ID_SEQ" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="LESSON_TO_INSTRUMENT_ID_SEQ" dataType="int" schemaName="public"/>
+        <rollback>
+            <dropSequence sequenceName="LESSON_TO_INSTRUMENT_ID_SEQ"/>
+        </rollback>
+    </changeSet>
+
     <changeSet id="20200623-24" author="ponamarchuk">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -13,8 +25,8 @@
         </preConditions>
         <comment>Создание таблицы LESSON_TO_INSTRUMENT</comment>
         <createTable tableName="LESSON_TO_INSTRUMENT">
-            <column name="ID" type="serial" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="ID" type="integer" defaultValueSequenceNext="LESSON_TO_INSTRUMENT_ID_SEQ">
+                <constraints primaryKey="true"/>
             </column>
         </createTable>
         <rollback>

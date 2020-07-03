@@ -1,4 +1,4 @@
-package ru.dfsystems.spring.tutorial.dto.room;
+package ru.dfsystems.spring.tutorial.dto.instrument;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import ru.dfsystems.spring.tutorial.dto.BaseParams;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RoomParams extends BaseParams {
+public class InstrumentParams extends BaseParams {
+    private String name;
     private String number;
-    private String block;
 }

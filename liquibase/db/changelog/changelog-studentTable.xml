@@ -5,6 +5,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
+    <changeSet id="20200702-03" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="STUDENT_ID_SEQ" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="STUDENT_ID_SEQ" dataType="int" schemaName="public"/>
+        <rollback>
+            <dropSequence sequenceName="STUDENT_ID_SEQ"/>
+        </rollback>
+    </changeSet>
+
     <changeSet id="20200620-01" author="ponamarchuk">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -13,8 +25,8 @@
         </preConditions>
         <comment>Создание таблицы STUDENT</comment>
         <createTable tableName="STUDENT">
-            <column name="ID" type="serial" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="ID" type="integer" defaultValueSequenceNext="STUDENT_ID_SEQ">
+                <constraints primaryKey="true"/>
             </column>
         </createTable>
         <rollback>

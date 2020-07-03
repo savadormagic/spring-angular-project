@@ -2,23 +2,20 @@ package ru.dfsystems.spring.tutorial.service;
 
 import ru.dfsystems.spring.tutorial.dao.BaseDao;
 import ru.dfsystems.spring.tutorial.dao.BaseListDao;
-import ru.dfsystems.spring.tutorial.dto.BaseDto;
-import ru.dfsystems.spring.tutorial.dto.BaseListDto;
-import ru.dfsystems.spring.tutorial.dto.Page;
-import ru.dfsystems.spring.tutorial.dto.PageParams;
+import ru.dfsystems.spring.tutorial.dto.*;
 import ru.dfsystems.spring.tutorial.generate.BaseJooq;
 import ru.dfsystems.spring.tutorial.mapping.BaseMapping;
 
 import java.time.LocalDateTime;
 
-public abstract class BaseService<List extends BaseListDto, Dto extends BaseDto, Params, Entity extends BaseJooq> {
+public abstract class BaseService<History extends BaseHistoryDto, List extends BaseListDto, Dto extends BaseDto<History>, Params extends BaseParams, Entity extends BaseJooq> {
 
-    private BaseMapping mappingService;
-    private BaseListDao<Entity, Params> listDao;
-    private BaseDao<Entity> baseDao;
-    private Class<List> listClass;
-    private Class<Dto> dtoClass;
-    private Class<Entity> entityClass;
+    private final BaseMapping mappingService;
+    private final BaseListDao<Entity, Params> listDao;
+    private final BaseDao<Entity> baseDao;
+    private final Class<List> listClass;
+    private final Class<Dto> dtoClass;
+    private final Class<Entity> entityClass;
 
     public BaseService(BaseMapping mappingService,
                        BaseListDao<Entity, Params> listDao,
@@ -66,5 +63,14 @@ public abstract class BaseService<List extends BaseListDto, Dto extends BaseDto,
         Entity entity = baseDao.getActiveByIdd(idd);
         entity.setDeleteDate(LocalDateTime.now());
         baseDao.update(entity);
+    }
+
+    public java.util.List<History> getHistory(Integer idd) {
+        Entity entity = baseDao.getActiveByIdd(idd);
+        if (entity == null){
+            throw new RuntimeException("Не найден объект");
+        }
+        Dto dto = mappingService.map(entity, dtoClass);
+        return dto.getHistory();
     }
 }

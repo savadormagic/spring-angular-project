@@ -1,17 +1,14 @@
 package ru.dfsystems.spring.tutorial.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.dfsystems.spring.tutorial.dto.BaseDto;
-import ru.dfsystems.spring.tutorial.dto.BaseListDto;
-import ru.dfsystems.spring.tutorial.dto.Page;
-import ru.dfsystems.spring.tutorial.dto.PageParams;
+import ru.dfsystems.spring.tutorial.dto.*;
 import ru.dfsystems.spring.tutorial.generate.BaseJooq;
 import ru.dfsystems.spring.tutorial.service.BaseService;
 
-public abstract class BaseController<List extends BaseListDto, Dto extends BaseDto, Params, Entity extends BaseJooq> {
-    private BaseService<List, Dto, Params, Entity> service;
+public abstract class BaseController<History extends BaseHistoryDto, List extends BaseListDto, Dto extends BaseDto<History>, Params extends BaseParams, Entity extends BaseJooq> {
+    private final BaseService<History, List, Dto, Params, Entity> service;
 
-    public BaseController(BaseService<List, Dto, Params, Entity> service) {
+    public BaseController(BaseService<History, List, Dto, Params, Entity> service) {
         this.service = service;
     }
 
@@ -38,5 +35,10 @@ public abstract class BaseController<List extends BaseListDto, Dto extends BaseD
     @DeleteMapping("/{idd}")
     public void delete(@PathVariable("idd") Integer idd) {
         service.delete(idd);
+    }
+
+    @GetMapping("/{idd}/history")
+    public java.util.List<History> getHistory(@PathVariable("idd") Integer idd) {
+        return service.getHistory(idd);
     }
 }

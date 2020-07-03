@@ -1,4 +1,4 @@
-package ru.dfsystems.spring.tutorial.dto.course;
+package ru.dfsystems.spring.tutorial.dto.teacher;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,18 +11,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CourseParams extends BaseParams {
-    private String name;
-    private Integer maxCountStudent;
+public class TeacherParams extends BaseParams {
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private String passport;
     private String status;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime startDateStart;
+    private LocalDateTime birthDateStart;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime startDateEnd;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime endDateStart;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime endDateEnd;
+    private LocalDateTime birthDateEnd;
 }

@@ -5,6 +5,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
+    <changeSet id="20200702-01" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="LESSON_ID_SEQ" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="LESSON_ID_SEQ" dataType="int" schemaName="public"/>
+        <rollback>
+            <dropSequence sequenceName="LESSON_ID_SEQ"/>
+        </rollback>
+    </changeSet>
+
     <changeSet id="20200623-12" author="ponamarchuk">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -13,8 +25,8 @@
         </preConditions>
         <comment>Создание таблицы LESSON</comment>
         <createTable tableName="LESSON">
-            <column name="ID" type="serial" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="ID" type="integer" defaultValueSequenceNext="LESSON_ID_SEQ">
+                <constraints primaryKey="true"/>
             </column>
         </createTable>
         <rollback>
@@ -22,6 +34,25 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="20200703-00" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="LESSON" schemaName="public"/>
+                <not>
+                    <columnExists tableName="LESSON" columnName="IDD"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки IDD к LESSON</comment>
+        <addColumn tableName="LESSON">
+            <column name="IDD" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="LESSON" columnName="IDD"/>
+        </rollback>
+    </changeSet>
 
     <changeSet id="20200623-13" author="ponamarchuk">
         <preConditions onFail="MARK_RAN">
@@ -152,6 +183,43 @@
         </addColumn>
         <rollback>
             <dropColumn tableName="LESSON" columnName="EXTRA_INSTRUMENTS"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="20200703-01" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="LESSON" schemaName="public"/>
+                <not>
+                    <columnExists tableName="LESSON" columnName="CREATE_DATE"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки CREATE_DATE к LESSON</comment>
+        <addColumn tableName="LESSON">
+            <column name="CREATE_DATE" type="timestamp(0)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="LESSON" columnName="CREATE_DATE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200703-02" author="ponamarchuk">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="LESSON" schemaName="public"/>
+                <not>
+                    <columnExists tableName="LESSON" columnName="DELETE_DATE"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>Добавление колонки DELETE_DATE к LESSON</comment>
+        <addColumn tableName="LESSON">
+            <column name="DELETE_DATE" type="timestamp(0)"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="LESSON" columnName="DELETE_DATE"/>
         </rollback>
     </changeSet>
 </databaseChangeLog>

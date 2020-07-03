@@ -1,4 +1,4 @@
-package ru.dfsystems.spring.tutorial.dao;
+package ru.dfsystems.spring.tutorial.dao.room;
 
 import lombok.AllArgsConstructor;
 import lombok.val;
@@ -6,6 +6,7 @@ import org.jooq.DSLContext;
 import org.jooq.SelectSeekStepN;
 import org.jooq.SortField;
 import org.springframework.stereotype.Repository;
+import ru.dfsystems.spring.tutorial.dao.BaseListDao;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.room.RoomParams;
@@ -56,7 +57,7 @@ public class RoomListDao implements BaseListDao<Room, RoomParams> {
                 .orderBy(sort);
     }
 
-    private SortField[] getOrderBy(String orderBy, String orderDir){
+    private SortField<?>[] getOrderBy(String orderBy, String orderDir){
         val asc = orderDir == null || orderDir.equalsIgnoreCase("asc");
 
         if (orderBy == null){
@@ -67,7 +68,7 @@ public class RoomListDao implements BaseListDao<Room, RoomParams> {
 
         val orderArray = orderBy.split(",");
 
-        List<SortField> listSortBy = new ArrayList<>();
+        List<SortField<?>> listSortBy = new ArrayList<>();
         for (val order: orderArray){
             if (order.equalsIgnoreCase("idd")){
                 listSortBy.add(asc ? ROOM.IDD.asc() : ROOM.IDD.desc());

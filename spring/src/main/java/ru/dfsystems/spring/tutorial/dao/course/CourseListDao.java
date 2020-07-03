@@ -1,16 +1,15 @@
-package ru.dfsystems.spring.tutorial.dao;
+package ru.dfsystems.spring.tutorial.dao.course;
 
 import lombok.AllArgsConstructor;
 import lombok.val;
-import lombok.var;
 import org.jooq.DSLContext;
 import org.jooq.SelectSeekStepN;
 import org.jooq.SortField;
 import org.springframework.stereotype.Repository;
+import ru.dfsystems.spring.tutorial.dao.BaseListDao;
 import ru.dfsystems.spring.tutorial.dto.Page;
 import ru.dfsystems.spring.tutorial.dto.PageParams;
 import ru.dfsystems.spring.tutorial.dto.course.CourseParams;
-import ru.dfsystems.spring.tutorial.generated.tables.daos.CourseDao;
 import ru.dfsystems.spring.tutorial.generated.tables.pojos.Course;
 import ru.dfsystems.spring.tutorial.generated.tables.records.CourseRecord;
 
@@ -21,10 +20,11 @@ import static ru.dfsystems.spring.tutorial.generated.tables.Course.COURSE;
 
 @Repository
 @AllArgsConstructor
-public class CourseDaoImpl extends CourseDao {
+public class CourseListDao implements BaseListDao<Course, CourseParams> {
     private final DSLContext jooq;
 
-    public Page<Course> getCoursesByParams(PageParams<CourseParams> pageParams) {
+    @Override
+    public Page<Course> list(PageParams<CourseParams> pageParams) {
         final CourseParams params = pageParams.getParams() == null ? new CourseParams() : pageParams.getParams();
         val listQuery = getCourseSelect(params);
 
@@ -70,7 +70,7 @@ public class CourseDaoImpl extends CourseDao {
                 .orderBy(sort);
     }
 
-    private SortField[] getOrderBy(String orderBy, String orderDir){
+    private SortField<?>[] getOrderBy(String orderBy, String orderDir){
         val asc = orderDir != null && orderDir.equalsIgnoreCase("asc");
 
         if (orderBy == null){
@@ -81,7 +81,7 @@ public class CourseDaoImpl extends CourseDao {
 
         val orderArray = orderBy.split(",");
 
-        List<SortField> listSortBy = new ArrayList<>();
+        List<SortField<?>> listSortBy = new ArrayList<>();
         for (val order: orderArray){
             if (order.equalsIgnoreCase("idd")){
                 listSortBy.add(asc ? COURSE.IDD.asc() : COURSE.IDD.desc());
@@ -108,4 +108,5 @@ public class CourseDaoImpl extends CourseDao {
 
         return listSortBy.toArray(new SortField[0]);
     }
+
 }

@@ -3,9 +3,10 @@ package ru.dfsystems.spring.tutorial.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.dfsystems.spring.tutorial.dao.RoomDaoImpl;
-import ru.dfsystems.spring.tutorial.dao.RoomListDao;
+import ru.dfsystems.spring.tutorial.dao.room.RoomDaoImpl;
+import ru.dfsystems.spring.tutorial.dao.room.RoomListDao;
 import ru.dfsystems.spring.tutorial.dto.room.RoomDto;
+import ru.dfsystems.spring.tutorial.dto.room.RoomHistoryDto;
 import ru.dfsystems.spring.tutorial.dto.room.RoomListDto;
 import ru.dfsystems.spring.tutorial.dto.room.RoomParams;
 import ru.dfsystems.spring.tutorial.generated.tables.daos.InstrumentToRoomDao;
@@ -14,8 +15,8 @@ import ru.dfsystems.spring.tutorial.generated.tables.pojos.Room;
 import ru.dfsystems.spring.tutorial.mapping.MappingService;
 
 @Service
-public class RoomService extends BaseService<RoomListDto, RoomDto, RoomParams, Room> {
-    private InstrumentToRoomDao instrumentToRoomDao;
+public class RoomService extends BaseService<RoomHistoryDto, RoomListDto, RoomDto, RoomParams, Room> {
+    private final InstrumentToRoomDao instrumentToRoomDao;
 
     @Autowired
     public RoomService(RoomListDao roomListDao, RoomDaoImpl roomDao, InstrumentToRoomDao instrumentToRoomDao, MappingService mappingService) {
